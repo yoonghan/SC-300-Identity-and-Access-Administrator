@@ -32,45 +32,11 @@ flowchart TD
     Tenant --> Subscription --> "Administrative Units(Optional)" --> "Group (Optional)" --> "User / Device"
 ```
 
-## Entra vs AD
-1. Microsoft Entra ID is primarily an identity solution, and it’s designed for internet-based applications by using HTTP (port 80) and HTTPS (port 443) communications.
-2. Microsoft Entra ID is a multi-tenant directory service.
-3. Microsoft Entra users and groups are created in a flat structure, and there are no OUs or GPOs.
-4. You can't query Microsoft Entra ID by using LDAP; instead, Microsoft Entra ID uses the REST API over HTTP and HTTPS.
-5. Microsoft Entra ID doesn't use Kerberos authentication; instead, it uses HTTP and HTTPS protocols such as SAML, WS-Federation, and OpenID Connect for authentication, and uses OAuth for authorization.
-6. Microsoft Entra ID includes federation services, and many third-party services such as Facebook are federated with and trust Microsoft Entra ID.
-
 ## Administrative Units
 Administrative units (AUs) are containers that you can use to delegate administrative control over specific sets of users and groups. For example, you can create an AU for a specific department or location, and then assign an administrator to manage the users and groups in that AU.
 
 ### Restrictive Administrative Units
 Only users and groups that are members of the AU can be managed by the administrator. Only **Global Administrator** can add members to the AU and **User Administrator** can manage members of the AU.
-
-## Users
-1. Cloud Identities - Users that are only in Entra ID.
-2. Directory Synced Identities - Users that are synced from on-premises AD to Entra ID. **Microsoft Entra Cloud Sync** is the recommended synchronization tool for most organizations—it uses a lightweight cloud-managed agent and supports multiple disconnected forests. **Microsoft Entra Connect Sync** remains available for complex scenarios such as device synchronization or groups with more than 50,000 members. Their source is **Windows Server AD**.
-3. Hybrid Identities - Users that are synced from on-premises AD to Entra ID and have a cloud-based identity.
-4. Guest Identities - Users that are not members of the organization but have access to resources in the organization.  
-
-### Delete Users
-1. Soft Delete - Users are soft deleted and can be restored within 30 days.
-2. Hard Delete - Users are hard deleted and cannot be restored.
-3. Permission required to restore or delete users is **User Administrator** or **Global Administrator** or **Partner Tier 1 Support** or **Partner Tier 2 Support**.
-
-## Groups
-2. Microsoft 365 Groups - Groups that are used to collaborate with other users. They have a shared mailbox, calendar, and other resources. This option also lets you give people outside of your organization access to the group. This option is available to users and admins.
-3. Security Groups - Groups that are used to manage access to resources. Members of a security group can include users, devices, and service principals. This option requires a Microsoft Entra administrator.
-4. Dynamic Security Groups - Groups that are dynamically populated based on rules:
-    - **Dynamic User** rules can be created for users, such as department, job title, or location.
-    - **Dynamic Device** rules can be created for devices, require Microsoft Entra ID P1 or P2.
-    - **Conditional Access Policy** - control access to resources based on conditions.
-
-## Microsoft Entra joined devices
-1. Any organization can deploy Microsoft Entra joined devices no matter the size or industry. 
-2. Controlled with Mobile Device Management.
-3. Can join as hybrid with on-prem AD.
-4. No longer supports device writeback. Use Cloud Kerberos Trust which allows Microsoft Entra joined and hybrid joined devices to authenticate to on-premises resources without requiring device objects to be written back to on-premises Active Directory.
-
 
 ## License assignment to groups
 1. License assignment to groups is managed through (underneath is still Entra ID):
@@ -82,6 +48,15 @@ Only users and groups that are members of the AU can be managed by the administr
     - Paid or trial edition Office 365 Enterprise E3 or greater
 3. License are assigned to groups for P1 license. For P2 license, it is assigned to users.
 4. License are also location specific. User must specify usage location in User Profile, else it will use the tenant's default location.
+5. Microsoft Entra Identity Protection and Privileged Identity Management (PIM) can be used for license assignment to groups. But both are included ONLY in P2 license.
+
+### Microsoft Entra ID Protection
+- What it does: Uses machine learning to detect suspicious activities (e.g., impossible travel, leaked credentials) to prevent compromised account access.
+- Capabilities: Generates risky user reports and allows for automated remediation via risk-based Conditional Access policies.
+
+### Microsoft Entra Privilege Identity Management (PIM)
+- What it does: Mitigates risk by enforcing "least privilege" access, allowing administrators to activate permissions only when needed, rather than having standing admin access.
+- Capabilities: Time-bound activation, approval workflows for activation, and auditing of privileged roles.
 
 ## Custom Security Attributes
 1. Custom security attributes are key-value pairs that you can use to store additional information about users and groups.

@@ -27,6 +27,8 @@ theme:
 nav:
   - Home: index.md
   - Topics:
+    - Basic.md
+    - UsersAndGroups.md
     - EntraId.md
   - Exam: 
     - Exam_Preparation/Notes.md
