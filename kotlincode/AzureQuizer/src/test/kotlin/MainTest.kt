@@ -1,5 +1,6 @@
 package com.walcron
 
+import com.walcron.llm.LLMQuizzer
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.mock
@@ -42,5 +43,18 @@ class ApplicationTest {
         val response = client.get("/quizz")
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals("A quiz was sent!", response.bodyAsText())
+    }
+
+    @Test
+    fun `test quiz has no response will send you a retry`(): Unit = testApplication {
+        val failedLlmQuizzer = mock<LLMQuizzer> {
+            every { quizz() } returns null
+        }
+        application {
+            configureRouting(failedLlmQuizzer)
+        }
+        val response = client.get("/quizz")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals("Please retry, engine broke down.", response.bodyAsText())
     }
 }

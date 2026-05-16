@@ -1,6 +1,7 @@
 package com.walcron
 
 import com.walcron.llm.Gemini
+import com.walcron.llm.LLMQuizzer
 import io.ktor.server.application.Application
 import io.ktor.server.engine.*
 import io.ktor.server.cio.*
@@ -16,7 +17,7 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
             call.respondText("SC-300 Quiz Backend is Alive!")
         }
         get("/quizz") {
-            call.respondText(aiEngine.quizz())
+            call.respondText(aiEngine.quizz() ?: "Please retry, engine broke down.")
         }
     }
 }
