@@ -39,7 +39,7 @@
     - PowerShell
     - Microsoft Graph API
 
-![License assignment to Users](/img/license-assignment-to-users.png)
+![License assignment to Users](img/license-assignment-to-users.png)
     
 2. Select Billing from the menu on the left.
 3. Select Licenses.
