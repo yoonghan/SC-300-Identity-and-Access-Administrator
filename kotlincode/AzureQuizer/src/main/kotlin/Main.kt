@@ -1,12 +1,13 @@
 package com.walcron
 
+import com.walcron.llm.Gemini
 import io.ktor.server.application.Application
 import io.ktor.server.engine.*
 import io.ktor.server.cio.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Application.configureRouting(aiEngine: Gemini? = null) {
+fun Application.configureRouting(aiEngine: LLMQuizzer) {
     routing {
         get("/") {
             call.respondText("SC-300 Quiz Backend is Alive!")
@@ -14,9 +15,9 @@ fun Application.configureRouting(aiEngine: Gemini? = null) {
         get("/healthz") {
             call.respondText("SC-300 Quiz Backend is Alive!")
         }
-//        get("/quizz") {
-//            call.respondText(aiEngine.quizz())
-//        }
+        get("/quizz") {
+            call.respondText(aiEngine.quizz())
+        }
     }
 }
 

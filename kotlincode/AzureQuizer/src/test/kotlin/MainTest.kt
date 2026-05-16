@@ -1,5 +1,8 @@
 package com.walcron
 
+import dev.mokkery.answering.returns
+import dev.mokkery.every
+import dev.mokkery.mock
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -7,10 +10,14 @@ import io.ktor.server.testing.*
 import kotlin.test.*
 
 class ApplicationTest {
+    val llmQuizzer = mock<LLMQuizzer> {
+        every { quizz() } returns "A quiz was sent!"
+    }
+
     @Test
     fun testRoot(): Unit = testApplication {
         application {
-            configureRouting()
+            configureRouting(llmQuizzer)
         }
         val response = client.get("/")
         assertEquals(HttpStatusCode.OK, response.status)
@@ -19,8 +26,21 @@ class ApplicationTest {
 
     @Test
     fun testHealth(): Unit = testApplication {
+        application {
+            configureRouting(llmQuizzer)
+        }
         val response = client.get("/healthz")
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals("SC-300 Quiz Backend is Alive!", response.bodyAsText())
+    }
+
+    @Test
+    fun testQuiz(): Unit = testApplication {
+        application {
+            configureRouting(llmQuizzer)
+        }
+        val response = client.get("/quizz")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals("A quiz was sent!", response.bodyAsText())
     }
 }

@@ -1,10 +1,11 @@
-package com.walcron
+package com.walcron.llm
 
-import com.google.genai.Client;
-import com.google.genai.types.GenerateContentResponse;
+import com.google.genai.Client
+import com.google.genai.types.GenerateContentResponse
+import com.walcron.LLMQuizzer
 import kotlin.system.exitProcess
 
-class Gemini {
+class Gemini: LLMQuizzer {
     var client: Client
 
     init {
@@ -16,7 +17,7 @@ class Gemini {
         client = Client()
     }
 
-    fun quizz(): String {
+    override fun quizz(): String {
         val response: GenerateContentResponse? = client.models.generateContent(
             "gemini-3-flash-preview",
             "Explain how AI works in a few words",
