@@ -26,12 +26,6 @@ Also know as Active Directory Domain Service(AD DS) previously. It deals only wi
 5. All Tenant have a onmicrosoft.com domain name. It is the default domain name. You can add custom domain name.
 6. AD is NOT DEAD, you can use it on computers; i.e even installing into VM (just not on drive C:).
 
-
-```mermaid
-flowchart TD
-    Tenant --> Subscription --> "Administrative Units(Optional)" --> "Group (Optional)" --> "User / Device"
-```
-
 ## Administrative Units
 Administrative units (AUs) are containers that you can use to delegate administrative control over specific sets of users and groups. For example, you can create an AU for a specific department or location, and then assign an administrator to manage the users and groups in that AU.
 
