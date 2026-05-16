@@ -30,6 +30,7 @@ nav:
     - Basic.md
     - 'Identity Management': IdentityManagement.md
     - EntraId.md
+    - License.md
   - Exam: 
     - Exam_Preparation/Notes.md
     - Exam_Preparation/Labs.md
