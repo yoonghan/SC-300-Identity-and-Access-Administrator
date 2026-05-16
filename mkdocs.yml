@@ -28,7 +28,7 @@ nav:
   - Home: index.md
   - Topics:
     - Basic.md
-    - 'Users and Groups': UsersAndGroups.md
+    - 'Identity Management': IdentityManagement.md
     - EntraId.md
   - Exam: 
     - Exam_Preparation/Notes.md
