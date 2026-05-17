@@ -3,9 +3,11 @@ package com.walcron.llm
 import com.google.genai.Client
 import com.google.genai.Models
 import com.google.genai.types.*
+import kotlinx.serialization.json.Json
 
 interface ClientWrapper {
     fun generateContent(text: String, config: GenerateContentConfig?): GenerateContentResponse?
+    fun generateQuizContent(text: String): QuizQuestion?
 }
 
 class GeminiClientWrapper(val client: Client = Client(), val geminiModel: String) : ClientWrapper {
@@ -17,18 +19,8 @@ class GeminiClientWrapper(val client: Client = Client(), val geminiModel: String
             text,
             config
         )
-}
 
-class Gemini(val client: ClientWrapper = GeminiClientWrapper(Client(), "gemini-3-flash-preview")) : LLMQuizzer {
-    override fun quizz(): String? {
-        val response = client.generateContent(
-            "Explain how AI works in a few words",
-            null
-        )
-        return response?.text()
-    }
-
-    override fun quizGenerate(): String? {
+    override fun generateQuizContent(text: String): QuizQuestion? {
         val quizSchema = Schema.builder()
             .build()
 
@@ -41,11 +33,30 @@ class Gemini(val client: ClientWrapper = GeminiClientWrapper(Client(), "gemini-3
             .responseSchema(quizSchema)
             .build()
 
-        val response: GenerateContentResponse? = client.generateContent(
-            "Prompt me the first question.",
+        val response: GenerateContentResponse? = generateContent(
+            text,
             config
         )
 
+        val jsonText = response?.text()
+
+        // 4. Parse the raw JSON string into your type-safe Kotlin Data Class
+        return jsonText?.let { Json.decodeFromString<QuizQuestion>(jsonText) }
+    }
+}
+
+class Gemini(val client: ClientWrapper = GeminiClientWrapper(Client(), "gemini-3-flash-preview")) : LLMQuizzer {
+    override fun quizz(): String? {
+        val response = client.generateContent(
+            "Explain how AI works in a few words",
+            null
+        )
         return response?.text()
+    }
+
+    override fun quizGenerate(): QuizQuestion? {
+        return client.generateQuizContent(
+            "Prompt me the first question."
+        )
     }
 }

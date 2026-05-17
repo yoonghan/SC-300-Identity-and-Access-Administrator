@@ -1,4 +1,4 @@
-package com.walcron
+package com.walcron.llm
 
 import kotlinx.serialization.Serializable
 

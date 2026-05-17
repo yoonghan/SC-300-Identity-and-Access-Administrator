@@ -5,6 +5,7 @@ import dev.mokkery.mock
 import dev.mokkery.every
 import dev.mokkery.matcher.any
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.core.StringContains.containsString
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
@@ -35,15 +36,18 @@ class GeminiTest {
 
     @Test
     fun testQuizGenerate() {
+        val quizQuestion = QuizQuestion("", "", emptyList(), 1, "")
+
         val geminiClientWrapper = mock<ClientWrapper> {
             every { generateContent(
                 "Prompt me the first question.",
                 any()
             ) } returns null
+            every {generateQuizContent("Prompt me the first question.")} returns quizQuestion
         }
 
         val gemini = Gemini(geminiClientWrapper)
         val response = gemini.quizGenerate()
-        assertNull(response)
+        assertThat(response, equalTo(quizQuestion))
     }
 }

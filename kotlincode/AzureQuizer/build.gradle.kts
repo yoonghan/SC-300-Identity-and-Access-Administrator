@@ -1,10 +1,12 @@
 plugins {
     kotlin("jvm") version "2.3.21"
     id("dev.mokkery") version "3.3.0"
+    kotlin("plugin.serialization") version "2.3.21"
 }
 
 group = "com.walcron"
 version = "1.0-SNAPSHOT"
+
 val ktorVersion = "3.4.3"
 
 repositories {
@@ -32,7 +34,7 @@ dependencies {
     testImplementation("org.hamcrest:hamcrest:3.0")
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
-
+    testImplementation("io.ktor:ktor-client-content-negotiation:${ktorVersion}")
 }
 
 tasks.test {

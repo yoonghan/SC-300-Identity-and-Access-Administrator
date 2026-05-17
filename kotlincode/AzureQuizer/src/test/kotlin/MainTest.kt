@@ -1,25 +1,32 @@
 package com.walcron
 
 import com.walcron.llm.LLMQuizzer
+import com.walcron.llm.QuizQuestion
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.mock
+import io.ktor.client.call.body
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.server.application.install
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation as ContentNegotiation
 import io.ktor.server.testing.*
 import kotlin.test.*
 
 class ApplicationTest {
+    val quizQuestion = QuizQuestion("", "", emptyList(), 1, "")
+
     val llmQuizzer = mock<LLMQuizzer> {
         every { quizz() } returns "A quiz was sent!"
-        every { quizGenerate() } returns "Generate a quiz!"
+        every { quizGenerate() } returns quizQuestion
     }
 
     @Test
     fun testRoot(): Unit = testApplication {
         application {
-            configureRouting(llmQuizzer)
+            module(llmQuizzer)
         }
         val response = client.get("/")
         assertEquals(HttpStatusCode.OK, response.status)
@@ -29,7 +36,7 @@ class ApplicationTest {
     @Test
     fun testHealth(): Unit = testApplication {
         application {
-            configureRouting(llmQuizzer)
+            module(llmQuizzer)
         }
         val response = client.get("/healthz")
         assertEquals(HttpStatusCode.OK, response.status)
@@ -39,7 +46,7 @@ class ApplicationTest {
     @Test
     fun testQuiz(): Unit = testApplication {
         application {
-            configureRouting(llmQuizzer)
+            module(llmQuizzer)
         }
         val response = client.get("/quizz")
         assertEquals(HttpStatusCode.OK, response.status)
@@ -52,7 +59,7 @@ class ApplicationTest {
             every { quizz() } returns null
         }
         application {
-            configureRouting(failedLlmQuizzer)
+            module(failedLlmQuizzer)
         }
         val response = client.get("/quizz")
         assertEquals(HttpStatusCode.OK, response.status)
@@ -62,11 +69,19 @@ class ApplicationTest {
     @Test
     fun testQuizGenerate(): Unit = testApplication {
         application {
-            configureRouting(llmQuizzer)
+            module(llmQuizzer)
         }
-        val response = client.get("/quiz/generate")
+
+        val jsonClient = createClient {
+            this.install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+                json()
+            }
+        }
+
+        val response = jsonClient.get("/quiz/generate")
         assertEquals(HttpStatusCode.OK, response.status)
-        assertEquals("Generate a quiz!", response.bodyAsText())
+        val returnedQuestion: QuizQuestion = response.body<QuizQuestion>()
+        assertEquals(quizQuestion, returnedQuestion)
     }
 
     @Test
@@ -75,7 +90,7 @@ class ApplicationTest {
             every { quizGenerate() } returns null
         }
         application {
-            configureRouting(failedLlmQuizzer)
+            module(failedLlmQuizzer)
         }
         val response = client.get("/quiz/generate")
         assertEquals(HttpStatusCode.OK, response.status)
