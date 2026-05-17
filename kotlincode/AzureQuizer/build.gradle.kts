@@ -29,6 +29,7 @@ dependencies {
 
     // testing
     testImplementation(kotlin("test"))
+    testImplementation("org.hamcrest:hamcrest:3.0")
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 
