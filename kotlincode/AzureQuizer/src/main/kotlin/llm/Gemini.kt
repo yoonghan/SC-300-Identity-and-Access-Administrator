@@ -24,4 +24,9 @@ class Gemini: LLMQuizzer {
         )
         return response?.text()
     }
+
+    override fun quizGenerate(): String {
+        TODO("Not yet implemented")
+        return "a quiz generation"
+    }
 }

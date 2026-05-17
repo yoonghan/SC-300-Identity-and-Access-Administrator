@@ -19,6 +19,9 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
         get("/quizz") {
             call.respondText(aiEngine.quizz() ?: "Please retry, engine broke down.")
         }
+        get("/quiz/generate") {
+            call.respondText(aiEngine.quizGenerate() ?: "")
+        }
     }
 }
 

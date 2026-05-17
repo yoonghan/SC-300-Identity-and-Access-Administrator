@@ -13,6 +13,7 @@ import kotlin.test.*
 class ApplicationTest {
     val llmQuizzer = mock<LLMQuizzer> {
         every { quizz() } returns "A quiz was sent!"
+        every { quizGenerate() } returns "Generate a quiz!"
     }
 
     @Test
@@ -56,5 +57,15 @@ class ApplicationTest {
         val response = client.get("/quizz")
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals("Please retry, engine broke down.", response.bodyAsText())
+    }
+
+    @Test
+    fun testQuizGenerate(): Unit = testApplication {
+        application {
+            configureRouting(llmQuizzer)
+        }
+        val response = client.get("/quiz/generate")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals("Generate a quiz!", response.bodyAsText())
     }
 }
