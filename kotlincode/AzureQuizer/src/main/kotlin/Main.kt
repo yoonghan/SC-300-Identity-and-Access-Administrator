@@ -8,6 +8,8 @@ import io.ktor.server.cio.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
+fun engineHandler(message: String?) = message ?: "Please retry, engine broke down."
+
 fun Application.configureRouting(aiEngine: LLMQuizzer) {
     routing {
         get("/") {
@@ -17,10 +19,10 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
             call.respondText("SC-300 Quiz Backend is Alive!")
         }
         get("/quizz") {
-            call.respondText(aiEngine.quizz() ?: "Please retry, engine broke down.")
+            call.respondText(engineHandler(aiEngine.quizz()))
         }
         get("/quiz/generate") {
-            call.respondText(aiEngine.quizGenerate() ?: "")
+            call.respondText(engineHandler(aiEngine.quizGenerate()))
         }
     }
 }

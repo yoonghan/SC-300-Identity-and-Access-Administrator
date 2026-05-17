@@ -68,4 +68,17 @@ class ApplicationTest {
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals("Generate a quiz!", response.bodyAsText())
     }
+
+    @Test
+    fun `test quiz generate has no response will send you a retry`(): Unit = testApplication {
+        val failedLlmQuizzer = mock<LLMQuizzer> {
+            every { quizGenerate() } returns null
+        }
+        application {
+            configureRouting(failedLlmQuizzer)
+        }
+        val response = client.get("/quiz/generate")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals("Please retry, engine broke down.", response.bodyAsText())
+    }
 }
