@@ -75,4 +75,43 @@
     3. Your laptop takes that token and shows it to your on-prem Domain Controller.
     4. Your Domain Controller says, "Ah, I see Entra ID vouched for you." It accepts it and issues you a standard on-prem Kerberos Ticket.
 
-
+## Self-service password reset (SSPR)
+1. SSPR can be used to reset the password of a user.
+    - not able to log in to their account.
+    - forgotten their password.
+    - locked out of their account.
+2. Only for Entra ID P1 and P2 licenses and Microsoft 365 Apps for business or Microsoft 365.
+3. Flow:
+    a. **Localization**: The portal checks the browser's locale setting and renders the SSPR page in the appropriate language.
+    b. **Verification**: The user enters their username and passes a CAPTCHA to ensure that it's a user and not a bot.
+    c. **Authentication**: The user enters the required data to authenticate their identity. They might enter a code or answer security questions.
+    d. **Password reset**: If the user passes the authentication tests, they can enter a new password and confirm it.
+    e. **Notification**: A message is sent to the user to confirm the reset.
+3. **Two-method authentication policy **is always applied to accounts with an administrator role, regardless of your configuration for other users. They have option of:
+    - Notify users on password resets
+    - Notify all admins when other admins reset their password
+4. Methods of authentication:
+    - Email
+    - Mobile app code - Microsoft Authenticator app
+    - Mobile app notification - Microsoft Authenticator app
+    - Mobile phone
+    - Office phone - # codes to press
+    - Security questions - minimum 3 questions
+4. Best practices:
+    - At least two methods of authentication.
+    - SMS and Security questions are not recommended as primary methods of authentication.
+    - Administrator accounts should have at least two methods of authentication.
+5. For users in a hybrid environment, on-prem AD password reset can be done using SSPR with **Microsoft Entra Connect** or **Cloud sync**.
+6. SSPR can be enabled on:
+    - None
+    - All - becareful: There is no block mechanism in place, if only 100 licenses is purchase but organization have 1000 users, all 1000 users will have SSPR capability. This will lead to compliance issue. 
+    - Selected users or groups
+7. Prerequisites for SSPR:
+    - At least one authentication method must be configured for the user.
+    - Organization must have Microsoft Entra organization license - at least P1.
+    - Microsoft Entra account with Authentication Policy Administrator role - an account to setup SSPR. 
+    - Non-administrative user account - You'll use this account to test SSPR.
+    - Security group with which to test the configuration - The non-administrative user account must be a member of this group. You'll use this security group to limit who you roll SSPR out to.
+8. Tips: If an exam question asks: "You have 50 Entra ID P1 licenses and 500 users. You need to ensure users can reset their passwords without breaking compliance. What should you do?"
+    - Incorrect Answer: Enable SSPR for "All" users (violates compliance terms).
+    - Correct Answer: Create a security group containing the 50 licensed users, and configure SSPR targeting only the Selected group.

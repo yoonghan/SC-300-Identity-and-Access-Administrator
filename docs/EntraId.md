@@ -32,18 +32,6 @@ Administrative units (AUs) are containers that you can use to delegate administr
 ### Restrictive Administrative Units
 Only users and groups that are members of the AU can be managed by the administrator. Only **Global Administrator** can add members to the AU and **User Administrator** can manage members of the AU.
 
-## License assignment to groups
-1. License assignment to groups is managed through (underneath is still Entra ID):
-    - Microsoft 365 admin center.
-    - PowerShell.
-    - Graph API.
-2. Requirements
-    - Paid or trial subscription for Microsoft Entra ID Premium P1 and greater
-    - Paid or trial edition Office 365 Enterprise E3 or greater
-3. License are assigned to groups for P1 license. For P2 license, it is assigned to users.
-4. License are also location specific. User must specify usage location in User Profile, else it will use the tenant's default location.
-5. Microsoft Entra Identity Protection and Privileged Identity Management (PIM) can be used for license assignment to groups. But both are included ONLY in P2 license.
-
 ### Microsoft Entra ID Protection
 - What it does: Uses machine learning to detect suspicious activities (e.g., impossible travel, leaked credentials) to prevent compromised account access.
 - Capabilities: Generates risky user reports and allows for automated remediation via risk-based Conditional Access policies.
