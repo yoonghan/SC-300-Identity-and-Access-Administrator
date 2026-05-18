@@ -13,6 +13,8 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation as ContentNegotiation
 import io.ktor.server.testing.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.StringContains.containsString
 import kotlin.test.*
 
 class ApplicationTest {
@@ -41,6 +43,16 @@ class ApplicationTest {
         val response = client.get("/healthz")
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals("SC-300 Quiz Backend is Alive!", response.bodyAsText())
+    }
+
+    @Test
+    fun testDomains(): Unit = testApplication {
+        application {
+            module(llmQuizzer)
+        }
+        val response = client.get("/domains")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertThat(response.body(), containsString("identity - Implement and manage user identities<br>"))
     }
 
     @Test
