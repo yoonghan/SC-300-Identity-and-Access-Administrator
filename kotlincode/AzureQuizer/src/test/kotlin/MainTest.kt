@@ -5,6 +5,7 @@ import com.walcron.llm.LLMQuizzer
 import com.walcron.llm.QuizQuestion
 import dev.mokkery.answering.returns
 import dev.mokkery.every
+import dev.mokkery.matcher.ofType
 import dev.mokkery.mock
 import io.ktor.client.call.body
 import io.ktor.client.request.*
@@ -78,7 +79,41 @@ class ApplicationTest {
     }
 
     @Test
-    fun testQuizGenerateCaseInsensitive(): Unit = testApplication {
+    fun testQuizGenerate(): Unit = testApplication {
+        val llmQuizzer = mock<LLMQuizzer> {
+            every { quizGenerate(ofType<Domain>()) } returns quizQuestion
+        }
+        application {
+            module(llmQuizzer)
+        }
+
+        val jsonClient = createClient {
+            this.install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+                json()
+            }
+        }
+
+        val response = jsonClient.get("/quiz/generate")
+        assertEquals(HttpStatusCode.OK, response.status)
+        val returnedQuestion: QuizQuestion = response.body<QuizQuestion>()
+        assertEquals(quizQuestion, returnedQuestion)
+    }
+
+    @Test
+    fun `test quiz generate has no response will send you a retry`(): Unit = testApplication {
+        val failedLlmQuizzer = mock<LLMQuizzer> {
+            every { quizGenerate(ofType<Domain>()) } returns null
+        }
+        application {
+            module(failedLlmQuizzer)
+        }
+        val response = client.get("/quiz/generate")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals("Please retry, engine broke down.", response.bodyAsText())
+    }
+
+    @Test
+    fun testQuizGenerateByDomainCaseInsensitive(): Unit = testApplication {
         application {
             module(llmQuizzer)
         }
@@ -96,7 +131,7 @@ class ApplicationTest {
     }
 
     @Test
-    fun `test quiz generate has no response will send you a retry`(): Unit = testApplication {
+    fun `test quiz generate by domain has no response will send you a retry`(): Unit = testApplication {
         val failedLlmQuizzer = mock<LLMQuizzer> {
             every { quizGenerate(Domain.identity) } returns null
         }

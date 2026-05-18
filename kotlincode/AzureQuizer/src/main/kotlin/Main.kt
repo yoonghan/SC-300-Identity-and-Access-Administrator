@@ -14,6 +14,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlin.enums.enumEntries
+import kotlin.random.Random
 
 fun <T> engineHandler(message: T?) = message ?: "Please retry, engine broke down."
 
@@ -41,6 +42,11 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
         }
         get("/quiz/domains") {
             call.respondText(domainsAvailable("<br>"), ContentType.Text.Html)
+        }
+        get("/quiz/generate") {
+            val randomDomain = Random.nextInt(0, 3)
+            val domain = enumEntries<Domain>()[randomDomain]
+            call.respond(HttpStatusCode.OK, engineHandler(aiEngine.quizGenerate(domain)))
         }
         get("/quiz/generate/{domainId}") {
             val searchDomain = call.parameters["domainId"]
