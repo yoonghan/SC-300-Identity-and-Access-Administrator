@@ -12,6 +12,7 @@ The code structure for kotlin is under kotlincode folder.
 ## Azure & DevOps Preparation
 - **Managed Identity:** When suggesting integrations, prioritize Azure Managed Identity (passwordless) over connection strings.
 - **Containerization:** Always provide multi-stage `Dockerfiles` using `alpine` or `distroless` to keep images under 30MB for fast Azure Container App cold starts.
+- Integrates with Gemini GenAI API, hence required to pass the API key via environment variable `GEMINI_API_KEY`.
 
 ## Agent Behavior
 - **Explain "Why":** Before implementing, briefly explain the architectural choice.

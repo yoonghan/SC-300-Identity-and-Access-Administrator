@@ -1,7 +1,12 @@
 plugins {
+    application
     kotlin("jvm") version "2.3.21"
     id("dev.mokkery") version "3.3.0"
     kotlin("plugin.serialization") version "2.3.21"
+}
+
+application {
+    mainClass.set("com.walcron.MainKt")
 }
 
 group = "com.walcron"
@@ -39,4 +44,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(21)
 }
