@@ -3,7 +3,6 @@ package com.walcron
 import com.walcron.llm.Domains
 import com.walcron.llm.Gemini
 import com.walcron.llm.LLMQuizzer
-import com.walcron.llm.QuizQuestion
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
@@ -14,6 +13,7 @@ import io.ktor.server.cio.*
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlin.enums.enumEntries
 
 fun <T> engineHandler(message: T?) = message ?: "Please retry, engine broke down."
 
@@ -22,6 +22,10 @@ fun Application.module(aiEngine: LLMQuizzer) {
     install(ContentNegotiation) {
         json()
     }
+}
+
+private fun domainsAvailable(seperator: String) = Domains.entries.joinToString(seperator) { domain ->
+    "$domain - ${domain.description}"
 }
 
 fun Application.configureRouting(aiEngine: LLMQuizzer) {
@@ -35,15 +39,20 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
         get("/quizz") {
             call.respond(HttpStatusCode.OK, engineHandler(aiEngine.quizz()))
         }
-        get("/domains") {
-            val domains = Domains.entries.joinToString("<br>") { domain ->
-                "$domain - ${domain.description}"
-            }
-
-            call.respondText(domains, ContentType.Text.Html)
+        get("/quiz/domains") {
+            call.respondText(domainsAvailable("<br>"), ContentType.Text.Html)
         }
-        get("/quiz/generate") {
-            call.respond(HttpStatusCode.OK, engineHandler(aiEngine.quizGenerate()))
+        get("/quiz/generate/{domainId}") {
+            val searchDomain = call.parameters["domainId"]
+            val domain = enumEntries<Domains>().find { domain -> domain.name.equals(searchDomain, ignoreCase = true) }
+
+            if(domain == null) {
+                call.respond(HttpStatusCode.BadRequest,
+                    Message("Domain $searchDomain not applicable. Only:${domainsAvailable("\n")}")
+                )
+            } else {
+                call.respond(HttpStatusCode.OK, engineHandler(aiEngine.quizGenerate()))
+            }
         }
     }
 }

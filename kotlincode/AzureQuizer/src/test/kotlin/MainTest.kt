@@ -10,8 +10,6 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.server.application.install
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation as ContentNegotiation
 import io.ktor.server.testing.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.StringContains.containsString
@@ -50,7 +48,7 @@ class ApplicationTest {
         application {
             module(llmQuizzer)
         }
-        val response = client.get("/domains")
+        val response = client.get("/quiz/domains")
         assertEquals(HttpStatusCode.OK, response.status)
         assertThat(response.body(), containsString("identity - Implement and manage user identities<br>"))
     }
@@ -79,7 +77,7 @@ class ApplicationTest {
     }
 
     @Test
-    fun testQuizGenerate(): Unit = testApplication {
+    fun testQuizGenerateCaseInsensitive(): Unit = testApplication {
         application {
             module(llmQuizzer)
         }
@@ -90,7 +88,7 @@ class ApplicationTest {
             }
         }
 
-        val response = jsonClient.get("/quiz/generate")
+        val response = jsonClient.get("/quiz/generate/idEntity")
         assertEquals(HttpStatusCode.OK, response.status)
         val returnedQuestion: QuizQuestion = response.body<QuizQuestion>()
         assertEquals(quizQuestion, returnedQuestion)
@@ -104,8 +102,21 @@ class ApplicationTest {
         application {
             module(failedLlmQuizzer)
         }
-        val response = client.get("/quiz/generate")
+        val response = client.get("/quiz/generate/identity")
         assertEquals(HttpStatusCode.OK, response.status)
         assertEquals("Please retry, engine broke down.", response.bodyAsText())
+    }
+
+    @Test
+    fun `shows exception if domains for generate is not recognized`(): Unit = testApplication {
+        val failedLlmQuizzer = mock<LLMQuizzer> {
+            every { quizGenerate() } returns null
+        }
+        application {
+            module(failedLlmQuizzer)
+        }
+        val response = client.get("/quiz/generate/eoeoeo")
+        assertEquals(HttpStatusCode.BadRequest, response.status)
+        assertThat(response.bodyAsText(), containsString("{\"error\":\"Domain eoeoeo not applicable. Only:identity - Implement and manage user identities\\n"))
     }
 }
