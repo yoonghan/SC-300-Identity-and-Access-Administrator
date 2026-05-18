@@ -68,7 +68,7 @@ class GeminiTest {
         assertThat(config?.candidateCount()?.getOrNull(), equalTo(1))
         assertThat(config?.responseMimeType()?.getOrNull(), equalTo("application/json"))
         assertThat(config?.thinkingConfig()?.getOrNull()?.thinkingLevel()?.getOrNull(), equalTo(ThinkingLevel("low")))
-        assertThat(config?.systemInstruction()?.getOrNull()?.text(), equalTo("You are an expert Azure Security Architect writing questions for the SC-300 exam."))
+        assertThat(config?.systemInstruction()?.getOrNull()?.text(), equalTo("You are an expert Azure Security Architect writing questions for the SC-300 exam on Microsoft Identity and Access Administrator."))
         assertTrue(config?.responseJsonSchema()?.getOrNull()?.instanceOf(Map::class) ?: false)
 
         val schema = config?.responseJsonSchema()!!.get() as Map<*, *>
