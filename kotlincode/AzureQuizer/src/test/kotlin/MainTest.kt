@@ -1,5 +1,6 @@
 package com.walcron
 
+import com.walcron.llm.Domain
 import com.walcron.llm.LLMQuizzer
 import com.walcron.llm.QuizQuestion
 import dev.mokkery.answering.returns
@@ -20,7 +21,7 @@ class ApplicationTest {
 
     val llmQuizzer = mock<LLMQuizzer> {
         every { quizz() } returns "A quiz was sent!"
-        every { quizGenerate() } returns quizQuestion
+        every { quizGenerate(Domain.identity) } returns quizQuestion
     }
 
     @Test
@@ -97,7 +98,7 @@ class ApplicationTest {
     @Test
     fun `test quiz generate has no response will send you a retry`(): Unit = testApplication {
         val failedLlmQuizzer = mock<LLMQuizzer> {
-            every { quizGenerate() } returns null
+            every { quizGenerate(Domain.identity) } returns null
         }
         application {
             module(failedLlmQuizzer)
@@ -110,7 +111,7 @@ class ApplicationTest {
     @Test
     fun `shows exception if domains for generate is not recognized`(): Unit = testApplication {
         val failedLlmQuizzer = mock<LLMQuizzer> {
-            every { quizGenerate() } returns null
+            every { quizGenerate(Domain.identity) } returns null
         }
         application {
             module(failedLlmQuizzer)

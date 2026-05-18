@@ -59,16 +59,16 @@ class GeminiTest {
         }
 
         val gemini = Gemini(geminiClientWrapper)
-        val response = gemini.quizGenerate()
+        val response = gemini.quizGenerate(Domain.identity)
         assertThat(response, equalTo(quizQuestion))
         verify {
-            geminiClientWrapper.generateQuizContent("Challenge me with a quiz question.", any())
+            geminiClientWrapper.generateQuizContent("Generate a challenging Microsoft SC-300 exam question focusing explicitly on: ${Domain.identity.focus}", any())
         }
         val config = captor.values.firstOrNull()?.build()
         assertThat(config?.candidateCount()?.getOrNull(), equalTo(1))
         assertThat(config?.responseMimeType()?.getOrNull(), equalTo("application/json"))
         assertThat(config?.thinkingConfig()?.getOrNull()?.thinkingLevel()?.getOrNull(), equalTo(ThinkingLevel("low")))
-        assertThat(config?.systemInstruction()?.getOrNull()?.text(), equalTo("You are an expert Azure Security Architect writing questions for the SC-300 exam on Microsoft Identity and Access Administrator."))
+        assertThat(config?.systemInstruction()?.getOrNull()?.text(), equalTo("Act as an expert Microsoft Certified Trainer specializing in the SC-300 (Microsoft Identity and Access Administrator) exam. Your task is to randomly generate realistic, scenario-based study questions and explanations."))
         assertTrue(config?.responseJsonSchema()?.getOrNull()?.instanceOf(Map::class) ?: false)
 
         val schema = config?.responseJsonSchema()!!.get() as Map<*, *>

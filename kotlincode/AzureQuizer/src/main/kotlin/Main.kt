@@ -1,6 +1,6 @@
 package com.walcron
 
-import com.walcron.llm.Domains
+import com.walcron.llm.Domain
 import com.walcron.llm.Gemini
 import com.walcron.llm.LLMQuizzer
 import io.ktor.http.ContentType
@@ -24,7 +24,7 @@ fun Application.module(aiEngine: LLMQuizzer) {
     }
 }
 
-private fun domainsAvailable(seperator: String) = Domains.entries.joinToString(seperator) { domain ->
+private fun domainsAvailable(seperator: String) = Domain.entries.joinToString(seperator) { domain ->
     "$domain - ${domain.description}"
 }
 
@@ -44,14 +44,14 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
         }
         get("/quiz/generate/{domainId}") {
             val searchDomain = call.parameters["domainId"]
-            val domain = enumEntries<Domains>().find { domain -> domain.name.equals(searchDomain, ignoreCase = true) }
+            val domain = enumEntries<Domain>().find { domain -> domain.name.equals(searchDomain, ignoreCase = true) }
 
             if(domain == null) {
                 call.respond(HttpStatusCode.BadRequest,
                     Message("Domain $searchDomain not applicable. Only:${domainsAvailable("\n")}")
                 )
             } else {
-                call.respond(HttpStatusCode.OK, engineHandler(aiEngine.quizGenerate()))
+                call.respond(HttpStatusCode.OK, engineHandler(aiEngine.quizGenerate(domain)))
             }
         }
     }

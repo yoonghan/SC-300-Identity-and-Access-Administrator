@@ -4,7 +4,6 @@ import com.google.genai.Client
 import com.google.genai.Models
 import com.google.genai.types.*
 import kotlinx.serialization.json.Json
-import com.google.genai.shaded.jackson.module.kotlin.ExtensionsKt.jacksonObjectMapper
 import io.ktor.http.ContentType
 import org.slf4j.LoggerFactory
 
@@ -54,7 +53,7 @@ Output the response strictly in the following format:
         return response?.text()
     }
 
-    override fun quizGenerate(): QuizQuestion? {
+    override fun quizGenerate(domain:Domain): QuizQuestion? {
         val parsedSchemaMap = mapOf(
             "type" to "object",
             "properties" to mapOf(
@@ -86,14 +85,14 @@ Output the response strictly in the following format:
         val configBuilder = GenerateContentConfig.builder()
             .thinkingConfig(ThinkingConfig.builder().thinkingLevel(ThinkingLevel("low")))
             .systemInstruction(
-                Content.fromParts(Part.fromText("You are an expert Azure Security Architect writing questions for the SC-300 exam on Microsoft Identity and Access Administrator.")))
+                Content.fromParts(Part.fromText("Act as an expert Microsoft Certified Trainer specializing in the SC-300 (Microsoft Identity and Access Administrator) exam. Your task is to randomly generate realistic, scenario-based study questions and explanations.")))
             .responseMimeType(ContentType.Application.Json.toString())
             .responseJsonSchema(parsedSchemaMap)
             .candidateCount(1)
 
 
         return client.generateQuizContent(
-            "Challenge me with a quiz question.", configBuilder
+            "Generate a challenging Microsoft SC-300 exam question focusing explicitly on: ${domain.focus}", configBuilder
         )
     }
 }
