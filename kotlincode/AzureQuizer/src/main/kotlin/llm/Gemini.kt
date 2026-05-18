@@ -37,7 +37,18 @@ class GeminiClientWrapper(val client: Client = Client(), val geminiModel: String
 class Gemini(val client: ClientWrapper = GeminiClientWrapper(Client(), "gemini-3-flash-preview")) : LLMQuizzer {
     override fun quizz(): String? {
         val response = client.generateContent(
-            "Explain how AI works in a few words",
+            """Act as an expert Microsoft Certified Trainer specializing in the SC-300 (Microsoft Identity and Access Administrator) exam. Your task is to randomly generate realistic, scenario-based study questions and explanations.
+
+For every generation, randomly select a topic from the SC-300 syllabus (e.g., Conditional Access, Privileged Identity Management, Entitlement Management, App Registrations, Identity Protection, or Cross-Tenant Access).
+
+Output the response strictly in the following format:
+
+**Topic:** [The specific SC-300 topic]
+**Scenario:** [A 2-3 sentence real-world problem a cloud administrator would face]
+**Question:** [The specific question the student must answer]
+**Explanation:** [A clear, concise answer explaining the "Why" and the "How"]
+**Extra Note:** [1-2 bullet points with edge cases, limitations, or best practices related to the scenario]
+                    """,
             null
         )
         return response?.text()
@@ -75,7 +86,7 @@ class Gemini(val client: ClientWrapper = GeminiClientWrapper(Client(), "gemini-3
         val configBuilder = GenerateContentConfig.builder()
             .thinkingConfig(ThinkingConfig.builder().thinkingLevel(ThinkingLevel("low")))
             .systemInstruction(
-                Content.fromParts(Part.fromText("You are an expert Azure Security Architect writing questions for the SC-300 exam.")))
+                Content.fromParts(Part.fromText("You are an expert Azure Security Architect writing questions for the SC-300 exam on Microsoft Identity and Access Administrator.")))
             .responseMimeType(ContentType.Application.Json.toString())
             .responseJsonSchema(parsedSchemaMap)
             .candidateCount(1)

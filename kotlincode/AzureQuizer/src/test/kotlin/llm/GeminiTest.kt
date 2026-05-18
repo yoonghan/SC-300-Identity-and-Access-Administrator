@@ -8,6 +8,7 @@ import dev.mokkery.every
 import dev.mokkery.matcher.any
 import dev.mokkery.matcher.capture.Capture.Companion.slot
 import dev.mokkery.matcher.capture.capture
+import dev.mokkery.matcher.matches
 import dev.mokkery.verify
 import io.ktor.util.reflect.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
@@ -33,7 +34,9 @@ class GeminiTest {
         val geminiClientWrapper = mock<ClientWrapper> {
             every {
                 generateContent(
-                    "Explain how AI works in a few words",
+                    matches {
+                        it.contains("Microsoft Certified Trainer specializing in the SC-300 (Microsoft Identity and Access Administrator)")
+                    },
                     null
                 )
             } returns null
