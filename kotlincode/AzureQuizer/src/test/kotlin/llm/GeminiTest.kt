@@ -59,7 +59,7 @@ class GeminiTest {
         val response = gemini.quizGenerate()
         assertThat(response, equalTo(quizQuestion))
         verify {
-            geminiClientWrapper.generateQuizContent("Prompt me the first question.", any())
+            geminiClientWrapper.generateQuizContent("Challenge me with a quiz question.", any())
         }
         val config = captor.values.firstOrNull()?.build()
         assertThat(config?.candidateCount()?.getOrNull(), equalTo(1))

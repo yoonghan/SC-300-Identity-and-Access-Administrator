@@ -82,7 +82,7 @@ class Gemini(val client: ClientWrapper = GeminiClientWrapper(Client(), "gemini-3
 
 
         return client.generateQuizContent(
-            "Prompt me the first question.", configBuilder
+            "Challenge me with a quiz question.", configBuilder
         )
     }
 }
