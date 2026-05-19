@@ -66,7 +66,6 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
             default("index.html")
         }
 
-
         get("/quiz/render/{domainId}") {
             val searchDomain = call.parameters["domainId"]
             val domain = enumEntries<Domain>().find { domain -> domain.name.equals(searchDomain, ignoreCase = true) }
