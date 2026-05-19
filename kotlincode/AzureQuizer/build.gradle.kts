@@ -34,6 +34,9 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
+    // To load HTMLX
+    implementation("io.ktor:ktor-server-html-builder:${ktorVersion}")
+
     // testing
     testImplementation(kotlin("test"))
     testImplementation("org.hamcrest:hamcrest:3.0")
