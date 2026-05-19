@@ -32,7 +32,7 @@ class ApplicationTest {
         }
         val response = client.get("/")
         assertEquals(HttpStatusCode.OK, response.status)
-        assertEquals("SC-300 Quiz Backend is Alive!", response.bodyAsText())
+        assertThat(response.bodyAsText(), containsString("!DOCTYPE html"))
     }
 
     @Test

@@ -36,9 +36,6 @@ private fun domainsAvailable(separator: String) = Domain.entries.joinToString(se
 
 fun Application.configureRouting(aiEngine: LLMQuizzer) {
     routing {
-        get("/") {
-            call.respondText("SC-300 Quiz Backend is Alive!")
-        }
         get("/healthz") {
             call.respondText("SC-300 Quiz Backend is Alive!")
         }
@@ -66,29 +63,10 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
             }
         }
 
-        staticResources("/static", "static") {
-            default("index.html") // Fallback file if someone hits http://localhost:8080/static/
+        staticResources("/", "static") {
+            default("index.html")
         }
-        get("/quiz/render/{domainId}") {
-            val searchDomain = call.parameters["domainId"]
-            val domain = enumEntries<Domain>().find { domain -> domain.name.equals(searchDomain, ignoreCase = true) }
 
-            if(domain == null) {
-                call.respond(HttpStatusCode.BadRequest,
-                    Message("Domain $searchDomain not applicable. Only:${domainsAvailable("\n")}")
-                )
-            } else {
-                val question = aiEngine.quizGenerate(domain)
-                call.respondHtml(HttpStatusCode.OK) {
-                    body {
-                        // Call the separate reusable template layout component
-                        div {
-                            quizQuestionFragment(question!!, domain.description)
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 
