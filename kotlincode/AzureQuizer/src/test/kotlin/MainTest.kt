@@ -155,4 +155,58 @@ class ApplicationTest {
         assertEquals(HttpStatusCode.BadRequest, response.status)
         assertThat(response.bodyAsText(), containsString("{\"error\":\"Domain eoeoeo not applicable. Only:identity - Implement and manage user identities\\n"))
     }
+
+    @Test
+    fun testRenderQuizWithInvalidDomain(): Unit = testApplication {
+        application {
+            module(llmQuizzer)
+        }
+
+        val jsonClient = createClient {
+            this.install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+                json()
+            }
+        }
+
+        val response = jsonClient.get("/quiz/render/error")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertThat(response.bodyAsText(), containsString("<div class=\"text-red-600\">Domain error is not valid.</div>"))
+    }
+
+    @Test
+    fun testRenderQuizWithValidDomain(): Unit = testApplication {
+        application {
+            module(llmQuizzer)
+        }
+
+        val jsonClient = createClient {
+            this.install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+                json()
+            }
+        }
+
+        val response = jsonClient.get("/quiz/render/identity")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertThat(response.bodyAsText(), containsString("Correct Choice Index: Option #2"))
+    }
+
+    @Test
+    fun testRenderQuizFailed(): Unit = testApplication {
+        val failedLlmQuizzer = mock<LLMQuizzer> {
+            every { quizGenerate(Domain.identity) } returns null
+        }
+        application {
+            module(failedLlmQuizzer)
+        }
+
+        val jsonClient = createClient {
+            this.install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+                json()
+            }
+        }
+
+        val response = jsonClient.get("/quiz/render/identity")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertThat(response.bodyAsText(), containsString("<div class=\"text-red-600\">Fail to provide question and answer.</div>"))
+    }
 }

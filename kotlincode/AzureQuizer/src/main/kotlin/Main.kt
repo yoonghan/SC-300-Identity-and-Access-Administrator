@@ -12,7 +12,6 @@ import io.ktor.server.application.install
 import io.ktor.server.engine.*
 import io.ktor.server.cio.*
 import io.ktor.server.html.respondHtml
-import io.ktor.server.http.content.default
 import io.ktor.server.http.content.staticResources
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.response.*
@@ -67,6 +66,42 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
             default("index.html")
         }
 
+
+        get("/quiz/render/{domainId}") {
+            val searchDomain = call.parameters["domainId"]
+            val domain = enumEntries<Domain>().find { domain -> domain.name.equals(searchDomain, ignoreCase = true) }
+
+            if(domain == null) {
+                call.respondHtml(HttpStatusCode.OK) {
+                    body {
+                        div {
+                            classes = setOf("text-red-600")
+                            + "Domain $searchDomain is not valid"
+                        }
+                    }
+                }
+            } else {
+                val question = aiEngine.quizGenerate(domain)
+                question?.let {
+                    call.respondHtml(HttpStatusCode.OK) {
+                        body {
+                            div {
+                                quizQuestionFragment(question, domain.description)
+                            }
+                        }
+                    }
+                } ?: run {
+                    call.respondHtml(HttpStatusCode.OK) {
+                        body {
+                            div {
+                                classes = setOf("text-red-600")
+                                + "Fail to provide question and answer."
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
