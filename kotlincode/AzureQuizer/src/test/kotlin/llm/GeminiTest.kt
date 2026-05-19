@@ -1,8 +1,11 @@
 package com.walcron.llm
 
+import com.google.genai.Client
+import com.google.genai.errors.ApiException
 import com.google.genai.types.GenerateContentConfig
 import com.google.genai.types.ThinkingLevel
 import dev.mokkery.answering.returns
+import dev.mokkery.answering.throws
 import dev.mokkery.mock
 import dev.mokkery.every
 import dev.mokkery.matcher.any
@@ -27,6 +30,16 @@ class GeminiTest {
             Gemini()
         }
         assertThat(error.message, containsString("environment variable GOOGLE_API_KEY or GEMINI_API_KEY"))
+    }
+
+    @Test
+    fun `should handle exception thrown by gemini`() {
+        val response = GeminiClientWrapper(
+                client = Client.builder().apiKey("Invalid").build(),
+                geminiModel = "invalid"
+            ).generateContent("", null)
+
+        assertNull(response)
     }
 
     @Test
@@ -62,45 +75,91 @@ class GeminiTest {
         val response = gemini.quizGenerate(Domain.identity)
         assertThat(response, equalTo(quizQuestion))
         verify {
-            geminiClientWrapper.generateQuizContent("Generate a challenging Microsoft SC-300 exam question focusing explicitly on: ${Domain.identity.focus}", any())
+            geminiClientWrapper.generateQuizContent(
+                "Generate a challenging Microsoft SC-300 exam question focusing explicitly on: ${Domain.identity.focus}",
+                any()
+            )
         }
         val config = captor.values.firstOrNull()?.build()
         assertThat(config?.candidateCount()?.getOrNull(), equalTo(1))
         assertThat(config?.responseMimeType()?.getOrNull(), equalTo("application/json"))
         assertThat(config?.thinkingConfig()?.getOrNull()?.thinkingLevel()?.getOrNull(), equalTo(ThinkingLevel("low")))
-        assertThat(config?.systemInstruction()?.getOrNull()?.text(), equalTo("Act as an expert Microsoft Certified Trainer specializing in the SC-300 (Microsoft Identity and Access Administrator) exam. Your task is to randomly generate realistic, scenario-based study questions and explanations."))
+        assertThat(
+            config?.systemInstruction()?.getOrNull()?.text(),
+            equalTo("Act as an expert Microsoft Certified Trainer specializing in the SC-300 (Microsoft Identity and Access Administrator) exam. Your task is to randomly generate realistic, scenario-based study questions and explanations.")
+        )
         assertTrue(config?.responseJsonSchema()?.getOrNull()?.instanceOf(Map::class) ?: false)
 
         val schema = config?.responseJsonSchema()!!.get() as Map<*, *>
         assertThat(schema["type"], equalTo("object"))
-        assertThat(schema["required"], equalTo(listOf("scenario", "question", "options", "correctIndex", "explanation")))
+        assertThat(
+            schema["required"],
+            equalTo(listOf("scenario", "question", "options", "correctIndex", "explanation"))
+        )
         with(schema["properties"] as Map<*, *>) {
-            assertThat(this["question"], equalTo(mapOf(
-                "type" to "string",
-                "description" to "The core exam multiple-choice problem statement text."
-            )))
+            assertThat(
+                this["question"], equalTo(
+                    mapOf(
+                        "type" to "string",
+                        "description" to "The core exam multiple-choice problem statement text."
+                    )
+                )
+            )
 
-            assertThat(this["scenario"], equalTo(mapOf(
-                "type" to "string",
-                "description" to "The enterprise infrastructure identity situation baseline context."
-            )))
+            assertThat(
+                this["scenario"], equalTo(
+                    mapOf(
+                        "type" to "string",
+                        "description" to "The enterprise infrastructure identity situation baseline context."
+                    )
+                )
+            )
 
-            assertThat(this["options"], equalTo(mapOf(
-                "type" to "array",
-                "items" to mapOf("type" to "string"),
-                "description" to "Exactly 4 distinct answer choice string items."
-            )))
+            assertThat(
+                this["options"], equalTo(
+                    mapOf(
+                        "type" to "array",
+                        "items" to mapOf("type" to "string"),
+                        "description" to "Exactly 4 distinct answer choice string items."
+                    )
+                )
+            )
 
-            assertThat(this["correctIndex"], equalTo(mapOf(
-                "type" to "integer",
-                "description" to "The ZERO-BASED index integer (0, 1, 2, or 3) pointing to the correct choice inside the options array."
-            )))
+            assertThat(
+                this["correctIndex"], equalTo(
+                    mapOf(
+                        "type" to "integer",
+                        "description" to "The ZERO-BASED index integer (0, 1, 2, or 3) pointing to the correct choice inside the options array."
+                    )
+                )
+            )
 
-            assertThat(this["explanation"], equalTo(mapOf(
-                "type" to "string",
-                "description" to "Detailed technical analysis justifying the answer based on Microsoft SC-300 study guidelines."
-            )))
+            assertThat(
+                this["explanation"], equalTo(
+                    mapOf(
+                        "type" to "string",
+                        "description" to "Detailed technical analysis justifying the answer based on Microsoft SC-300 study guidelines."
+                    )
+                )
+            )
         }
 
+    }
+
+
+    @Test
+    fun testGenerateQuizWithGeminiError() {
+        val geminiClientWrapper = mock<ClientWrapper> {
+            every {
+                generateContent(any(), any())
+            } throws ApiException(429, "Retry Exception", "Quota exceeded.")
+        }
+
+        val gemini = Gemini(geminiClientWrapper)
+
+        val error = assertThrows<ApiException> {
+            val response = gemini.quizz()
+        }
+        assertThat(error.message, equalTo("429 Retry Exception. Quota exceeded."))
     }
 }

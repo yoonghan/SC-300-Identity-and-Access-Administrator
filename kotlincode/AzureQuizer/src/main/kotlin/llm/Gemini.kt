@@ -17,11 +17,16 @@ class GeminiClientWrapper(val client: Client = Client(), val geminiModel: String
     private val logger = LoggerFactory.getLogger(GeminiClientWrapper::class.java)
 
     override fun generateContent(text: String, config: GenerateContentConfig?): GenerateContentResponse? =
-        getModel().generateContent(
-            geminiModel,
-            text,
-            config
-        )
+        try {
+            getModel().generateContent(
+                geminiModel,
+                text,
+                config
+            )
+        } catch (ex: Exception) {
+            logger.error(ex.message, ex)
+            null
+        }
 
     override fun generateQuizContent(text: String, generateConfigBuilder: GenerateContentConfig.Builder): QuizQuestion? {
         val response: GenerateContentResponse? = generateContent(text, generateConfigBuilder.build())
