@@ -37,6 +37,10 @@ dependencies {
     // To load HTMLX
     implementation("io.ktor:ktor-server-html-builder:${ktorVersion}")
 
+    // Core Telemetry Infrastructure
+    implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
+    implementation("io.micrometer:micrometer-registry-otlp:latest.release")
+
     // testing
     testImplementation(kotlin("test"))
     testImplementation("org.hamcrest:hamcrest:3.0")
