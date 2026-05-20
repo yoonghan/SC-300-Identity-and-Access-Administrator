@@ -75,7 +75,7 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
                     body {
                         div {
                             classes = setOf("text-red-600")
-                            + "Domain $searchDomain is not valid"
+                            + "Domain $searchDomain is not valid."
                         }
                     }
                 }
