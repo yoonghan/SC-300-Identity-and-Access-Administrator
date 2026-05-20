@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     // Gemini
-    implementation("com.google.genai:google-genai:1.53.0")
+    implementation("com.google.genai:google-genai:1.54.0")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:1.5.32")
