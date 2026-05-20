@@ -12,7 +12,7 @@ application {
 group = "com.walcron"
 version = "1.0-SNAPSHOT"
 
-val ktorVersion = "3.4.3"
+val ktorVersion = "3.5.0"
 
 repositories {
     mavenCentral()
