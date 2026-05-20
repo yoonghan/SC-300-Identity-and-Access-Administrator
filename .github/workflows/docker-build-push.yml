@@ -2,6 +2,8 @@ name: Build and Push Docker Image
 
 on:
   push:
+    paths:
+      - 'kotlincode/src/**'
     branches:
       - main
   pull_request:
@@ -36,6 +38,7 @@ jobs:
   build-and-push-image:
     needs: check
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
       packages: write
