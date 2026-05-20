@@ -19,11 +19,42 @@ import io.ktor.server.routing.*
 import kotlin.enums.enumEntries
 import kotlin.random.Random
 import kotlinx.html.*
+import io.ktor.server.metrics.micrometer.*
+import io.micrometer.core.instrument.Metrics
+import io.micrometer.core.instrument.Timer
+import io.micrometer.core.instrument.composite.CompositeMeterRegistry
+import io.micrometer.core.instrument.logging.LoggingMeterRegistry
+import io.micrometer.registry.otlp.OtlpMeterRegistry
 
 fun <T> engineHandler(message: T?) = message ?: "Please retry, engine broke down."
 
+fun Application.configureTelemetry() {
+    val otlpRegistry = OtlpMeterRegistry()
+    val loggingRegistry = LoggingMeterRegistry()
+
+    val compositeRegistry = CompositeMeterRegistry().apply {
+        add(loggingRegistry)
+        add(otlpRegistry)
+    }
+
+    Metrics.addRegistry(compositeRegistry)
+
+    // 2. Install the Micrometer plugin directly onto the Ktor pipeline
+    install(MicrometerMetrics) {
+        registry = compositeRegistry
+
+        // Automatically attach structural tag labels to your metrics
+        timers { call, exception ->
+            tag("route", call.request.local.uri)
+            tag("status", call.response.status()?.value?.toString() ?: "200")
+            if (exception != null) tag("exception", exception.javaClass.simpleName)
+        }
+    }
+}
+
 fun Application.module(aiEngine: LLMQuizzer) {
     configureRouting(aiEngine)
+    configureTelemetry()
     install(ContentNegotiation) {
         json()
     }
@@ -80,7 +111,16 @@ fun Application.configureRouting(aiEngine: LLMQuizzer) {
                     }
                 }
             } else {
-                val question = aiEngine.quizGenerate(domain)
+
+                val geminiTimer = Timer.builder("ai.gemini.request")
+                    .description("Tracks the total processing latency of the Google GenAI backend model computation")
+                    .tag("domain", domain.name)
+                    .register(Metrics.globalRegistry)
+
+                val question = geminiTimer.recordCallable {
+                    aiEngine.quizGenerate(domain)
+                }
+
                 question?.let {
                     call.respondHtml(HttpStatusCode.OK) {
                         body {
