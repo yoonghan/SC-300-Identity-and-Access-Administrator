@@ -1,0 +1,58 @@
+identity:
+  type: SystemAssigned
+properties:
+  configuration:
+    ingress:
+      external: true
+      allowInsecure: false
+      targetPort: 8080
+      corsPolicy:
+        allowedOrigins:
+          - "https://www.walcron.com"
+          - "https://yoonghan.github.io"
+        allowedMethods:
+          - "GET"
+          - "POST"
+          - "PUT"
+          - "DELETE"
+          - "OPTIONS"
+        allowedHeaders:
+          - "*"
+        allowCredentials: true
+    registries:
+      - server: ghcr.io
+        username: "YOUR_REGISTRY_USERNAME"
+        passwordSecretRef: "registry-password"
+    secrets:
+      - name: "registry-password"
+        value: "YOUR_REGISTRY_PASSWORD"
+  template:
+    containers:
+      - image: ghcr.io/yoonghan/sc-300-identity-and-access-administrator:latest
+        name: walcron
+        env:
+          - name: APPLICATIONINSIGHTS_CONFIGURATION_CONTENT
+            value: "{}"
+          - name: GEMINI_API_KEY
+            value: "YOUR_GEMINI_API_KEY"
+        resources:
+          cpu: 0.5
+          memory: 1.0Gi
+        probes:
+          - type: Liveness
+            httpGet:
+              path: "/healthz"
+              port: 8080
+            initialDelaySeconds: 5  
+            periodSeconds: 10
+            failureThreshold: 3
+          - type: Readiness
+            httpGet:
+              path: "/healthz"
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+    scale:
+      minReplicas: 0
+      maxReplicas: 1
