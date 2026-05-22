@@ -26,6 +26,10 @@ ADD https://github.com/microsoft/ApplicationInsights-Java/releases/download/3.5.
 # Copy the built distribution from the build stage
 COPY --from=build /app/build/install/AzureQuizer /app/
 
+# Add app insights
+COPY --from=build /app/applicationinsights.json /app/applicationinsights.json
+ENV APPLICATIONINSIGHTS_CONFIGURATION_FILE="/app/applicationinsights.json"
+
 # Load the Java Agent when booting
 ENV APPLICATIONINSIGHTS_CONFIGURATION_FILE="/app/applicationinsights.json"
 ENV JAVA_OPTS="-javaagent:/app/applicationinsights-agent.jar"
