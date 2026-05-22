@@ -1,7 +1,4 @@
 {
-    "role": {
-        "name": "sc-300-quiz-gen"
-    },
     "connectionString": "${APPLICATIONINSIGHTS_CONNECTION_STRING}",
     "instrumentation": {
         "micrometer": {
