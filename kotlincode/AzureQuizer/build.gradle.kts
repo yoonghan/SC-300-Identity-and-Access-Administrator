@@ -42,6 +42,7 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-otlp:latest.release")
     implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.18.1-alpha")
     implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:1.62.0")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp:1.62.0")
 
     // testing
     testImplementation(kotlin("test"))
