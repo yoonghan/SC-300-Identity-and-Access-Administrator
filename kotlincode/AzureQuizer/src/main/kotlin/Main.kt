@@ -24,19 +24,15 @@ import io.micrometer.core.instrument.Metrics
 import io.micrometer.core.instrument.Timer
 import io.micrometer.core.instrument.composite.CompositeMeterRegistry
 import io.micrometer.core.instrument.logging.LoggingMeterRegistry
-import io.micrometer.registry.otlp.OtlpMeterRegistry
 
 fun <T> engineHandler(message: T?) = message ?: "Please retry, engine broke down."
 
 fun Application.configureTelemetry() {
-    val otlpRegistry = OtlpMeterRegistry()
     val loggingRegistry = LoggingMeterRegistry()
 
     val compositeRegistry = CompositeMeterRegistry().apply {
         add(loggingRegistry)
-        add(otlpRegistry)
     }
-
     Metrics.addRegistry(compositeRegistry)
 
     // 2. Install the Micrometer plugin directly onto the Ktor pipeline

@@ -19,8 +19,14 @@ RUN ./gradlew installDist --no-daemon
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
+# 1. Download the Application Insights Java Agent directly into the container
+ADD https://github.com/microsoft/ApplicationInsights-Java/releases/download/3.5.2/applicationinsights-agent-3.5.2.jar /app/applicationinsights-agent.jar
+
 # Copy the built distribution from the build stage
 COPY --from=build /app/build/install/AzureQuizer /app/
+
+# Load the Java Agent when booting
+ENV JAVA_OPTS="-javaagent:/app/applicationinsights-agent.jar"
 
 # Expose the port configured in Ktor (8080)
 EXPOSE 8080
