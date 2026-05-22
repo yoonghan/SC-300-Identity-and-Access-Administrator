@@ -24,21 +24,10 @@ import io.micrometer.core.instrument.Metrics
 import io.micrometer.core.instrument.Timer
 import io.micrometer.core.instrument.composite.CompositeMeterRegistry
 import io.micrometer.core.instrument.logging.LoggingMeterRegistry
-import io.opentelemetry.api.OpenTelemetry
+import io.opentelemetry.api.GlobalOpenTelemetry
 import io.opentelemetry.instrumentation.ktor.v3_0.KtorServerTelemetry
-import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdk
-import io.opentelemetry.semconv.ServiceAttributes
 
 fun <T> engineHandler(message: T?) = message ?: "Please retry, engine broke down."
-
-fun getOpenTelemetry(serviceName: String): OpenTelemetry {
-    return AutoConfiguredOpenTelemetrySdk.builder().addResourceCustomizer { oldResource, _ ->
-        oldResource.toBuilder()
-            .putAll(oldResource.attributes)
-            .put(ServiceAttributes.SERVICE_NAME, serviceName)
-            .build()
-    }.build().openTelemetrySdk
-}
 
 fun Application.configureTelemetry() {
     val loggingRegistry = LoggingMeterRegistry()
@@ -158,10 +147,8 @@ fun main() {
 
     embeddedServer(CIO, port = 8080) {
         module(aiEngine)
-        val openTelemetry = getOpenTelemetry(serviceName = "sc-300-quizz")
-
         install(KtorServerTelemetry){
-            setOpenTelemetry(openTelemetry)
+            setOpenTelemetry(GlobalOpenTelemetry.get())
         }
     }.start(wait = true)
 }
