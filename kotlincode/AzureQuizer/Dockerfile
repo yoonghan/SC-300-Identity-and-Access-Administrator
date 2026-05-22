@@ -8,6 +8,7 @@ COPY gradle/ gradle/
 COPY build.gradle.kts .
 COPY settings.gradle.kts .
 COPY gradle.properties .
+COPY applicationinsights.json .
 
 # Copy source code
 COPY src/ src/
@@ -26,6 +27,7 @@ ADD https://github.com/microsoft/ApplicationInsights-Java/releases/download/3.5.
 COPY --from=build /app/build/install/AzureQuizer /app/
 
 # Load the Java Agent when booting
+ENV APPLICATIONINSIGHTS_CONFIGURATION_FILE="/app/applicationinsights.json"
 ENV JAVA_OPTS="-javaagent:/app/applicationinsights-agent.jar"
 
 # Expose the port configured in Ktor (8080)

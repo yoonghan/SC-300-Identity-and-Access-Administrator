@@ -1,0 +1,15 @@
+{
+    "connectionString": "${APPLICATIONINSIGHTS_CONNECTION_STRING}",
+    "instrumentation": {
+        "micrometer": {
+            "enabled": true
+        }
+    },
+    "preview": {
+        "instrumentation": {
+            "ktor": {
+                "enabled": true
+            }
+        }
+    }
+}
