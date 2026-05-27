@@ -23,7 +23,7 @@ dependencies {
     implementation("com.google.genai:google-genai:1.54.0")
 
     // Logging
-    implementation("ch.qos.logback:logback-classic:1.5.32")
+    implementation("ch.qos.logback:logback-classic:1.5.33")
 
     // The core server engine (CIO = Coroutine-based I/O)
     implementation("io.ktor:ktor-server-core:$ktorVersion")
