@@ -60,4 +60,4 @@ az containerapp connection create app-insights \
   --target-resource-group walcron-rg \
   --app-insights walcron-application-insight \
   --client-type java \
-  --container walcron
+  --container sc-300-quiz-gen

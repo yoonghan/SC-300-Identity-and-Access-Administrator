@@ -1,7 +1,9 @@
 # Exam Notes
 
 ## Notes
-
+Understanding documentation and navigation.
+1. Entra id starts in https://learn.microsoft.com/en-us/entra/identity/, means in Entra -> "Microsoft Entra ID" at top-menu.
+2. Example: Looking at limit, look into "User Management" -> "Reference" -> [Microsoft Entra Limits](https://learn.microsoft.com/en-us/entra/identity/users/directory-service-limits-restrictions).
 
 
 ## Timing
