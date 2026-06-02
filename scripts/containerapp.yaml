@@ -29,7 +29,7 @@ properties:
   template:
     containers:
       - image: ghcr.io/yoonghan/sc-300-identity-and-access-administrator:latest
-        name: walcron
+        name: sc-300-quiz-gen
         env:
           - name: APPLICATIONINSIGHTS_CONFIGURATION_CONTENT
             value: "{}"
