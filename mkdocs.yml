@@ -31,6 +31,9 @@ nav:
     - 'Identity Management': IdentityManagement.md
     - EntraId.md
     - License.md
+    - ConditionAccess.md
+    - SingleSignOn.md
+    - ExternalId.md
   - Exam: 
     - Exam_Preparation/Notes.md
     - Exam_Preparation/Labs.md
