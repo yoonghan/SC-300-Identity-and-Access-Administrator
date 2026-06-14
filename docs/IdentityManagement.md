@@ -23,12 +23,25 @@
 
 ## Groups
 1. Group types:
-    - **Microsoft 365 Groups** - Groups that are used to collaborate with other users. They have a shared mailbox, calendar, and other resources. This option also lets you give people outside of your organization access to the group. This option is available to users and admins.
+    - **Microsoft 365 Groups** - Groups that are used to collaborate with other users. They have a shared mailbox, calendar, and other resources. This option also lets you give people outside of your organization access to the group. This option can only _add_ users, not groups or devices.
     - **Security Groups** - Groups that are used to manage access to resources. Members of a security group can include users, devices, and service principals. **This option requires a Microsoft Entra administrator.**
 2. Membership types:
     - **Assigned** - members are added and maintained manually.
     - **Dynamic User** - Users are added and removed automatically based on rules that evaluate user attributes such as department, job title, or location. **Requires P1/P2 license.**
     - **Dynamic Device** - Devices are added and removed automatically based on rules that evaluate device attributes such as department, job title, or location. **Requires P1/P2 license.**
+    - **NOTE**: Users cannot be added manually if it is a dynamic membership type.
+3. "Entra roles can be assigned to group" toggle
+    - Is immutable once created
+    - User cannot use **dynamic**, **nested** or **Microsoft 365** group for the toggle to be true.
+    - User must be assigned manually to the group to prevent user to have highest privilege.
+
+### Group nesting
+1. There are 2 methods to create nested groups:
+    - **Adding Groups as Members**: Directly add one group (group A) as a member of another group (group B). Group A's members automatically inherit the permissions of Group B.
+2. Group nestings are not allowed if:
+    - Group is a dynamic group. E.g. Group A is non-dynamic, Group B is dynamic. Then Group B can be added as a member of Group A. But a non-dynamic Group A cannot be added as a member of a dynamic Group B.
+    - Group is a Microsoft 365 Group. Group nesting is not allowed for Microsoft 365 groups.
+    - Group has "Entra roles can be assigned to group" toggle. E.g. Group A has "assign role" toggled as true, Group B is non-dynamic and no role-assigned. Then Group B can be added as a member of Group A. But a role-assigned Group A cannot be added as a member of Group B (non-dynamic and no role-assigned). 
 
 ## Microsoft Entra joined devices
 [Read up](https://learn.microsoft.com/en-us/training/modules/create-configure-manage-identities/7-configure-manage-device-registration)

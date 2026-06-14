@@ -1,6 +1,11 @@
 # Basic
 Basics that is brought from AZ-104 Entra Management.
 
+## Definition of Entra
+1. Tenant = Digital representation of organization.
+2. Subscription = (optional), but required to use cloud solution.
+3. Identity = Account (User/Group/App).
+
 ## Characteristics
 1. Microsoft Entra ID is primarily an identity solution, and it’s designed for internet-based applications by using HTTP (port 80) and HTTPS (port 443) communications.
 2. Authentication protocol for authorization is either:

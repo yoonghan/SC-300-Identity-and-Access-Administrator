@@ -34,6 +34,8 @@ nav:
     - ConditionAccess.md
     - SingleSignOn.md
     - ExternalId.md
+    - RoleBasedAccess.md
+    - AcessReview.md
   - Exam: 
     - Exam_Preparation/Notes.md
     - Exam_Preparation/Labs.md
