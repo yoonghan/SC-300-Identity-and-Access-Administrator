@@ -13,9 +13,6 @@ There are basically only 2 tenant types.
 | **Device Trust** | Intune MDM, Compliant Devices, Hybrid Join | None. You cannot force a consumer's personal Mac or Android to be compliant. |
 | **Pricing Model** | Per-User seat license (Free, P1, P2) | MAU (Monthly Active Users) — Free for the first 50,000 active users per month. |
 
-## User Type
-Take note only invited partner will be Guest, when employee (regardless is external or not) is created it will be Member.
-
 ### For Entra External/AD
 
 When a public customer signs up via your HTMX frontend using their personal email (e.g., customer@gmail.com), Entra ID creates that object right inside the consumer directory database.
@@ -75,6 +72,13 @@ Not the same.
 | **What is it?** | A specific policy configuration blade inside your directory. | The entire product suite/family name for external identities. |
 | **Primary Focus** | Controlling B2B Guests entering an enterprise workforce environment. | Managing B2B partners AND building customer-facing (CIAM) apps. |
 | **Typical Target User** | A third-party vendor auditor needing access to an internal project. | A retail consumer logging into your web application using Google. |
+
+## User settings - tenant wide
+1. User can register app (default true)
+2. User can create self service group (default true)
+3. Restrict non admin from creating user (default false) -> if true, all user must be created by admin.
+4. Linked in account connection (default false)
+5. Keep user signed in (default true)
 
 ### Exam sample
 **Scenario A (Workforce Domain)**: * Question: "Your corporate security officer mandates that employees should not be allowed to share internal SharePoint sites with external consultants using competitor domains. What configuration option should you adjust?"

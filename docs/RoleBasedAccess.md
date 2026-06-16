@@ -8,6 +8,20 @@
 1. Only for Users, Group, Domains and Applications.
 2. This is custom roles for "App Registration" and "Enterprise Application".
 
+## User assigned roles
+1. Create user assigned role
+2. Assign user assigned role
+3. User can assign a role type:
+    - Custom Roles
+    - Defined roles for apps
+        - Application developer
+        - Application administrator
+4. Scope Type:
+    - Directory = Top level of tenant. Meaning user have all the access to all application, resources with the selected role type.
+    - Application = Targeted boundry, meaning user can only assign role type to application that is assign to him. This can be configured when the role is created.
+5. Important note, user assigned roles can only assign **other users** to roles, not 
+
+
 ## Flow in Azure
 ### App Registration
 1. Every app created must "register" in Microsoft Entra 
