@@ -130,3 +130,6 @@
 8. Tips: If an exam question asks: "You have 50 Entra ID P1 licenses and 500 users. You need to ensure users can reset their passwords without breaking compliance. What should you do?"
     - Incorrect Answer: Enable SSPR for "All" users (violates compliance terms).
     - Correct Answer: Create a security group containing the 50 licensed users, and configure SSPR targeting only the Selected group.
+
+## Multi-factor Authentication (MFA)
+![alt text](img/mfa.png)
