@@ -41,10 +41,15 @@ Only users and groups that are members of the AU can be managed by the administr
 - Capabilities: Time-bound activation, approval workflows for activation, and auditing of privileged roles.
 
 ## Custom Security Attributes
-1. Custom security attributes are key-value pairs that you can use to store additional information about users and groups.
-2. They are defined by an administrator and can be used to filter and group users and groups.
-3. They are also used to control access to resources based on conditions.
-4. Custom security attributes are not supported for guest users.
+1. Read at https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-manage?tabs=admin-center
+2. Custom security attributes are key-value pairs that you can use to store additional information about users and groups.
+3. They are defined by an administrator and can be used to filter and group users and groups.
+4. They are also used to control access to resources based on conditions.
+5. Custom security attributes are not supported for guest users.
+6. NOTE:
+    - Attribute Definition Admin = required to create 
+    - Attribute Assignment Admin = required to assign (this attribute can be assigned to user or group)
+7. No spaces for the attribute. Got type like multi option, string, int.
 
 ## System for Cross-Domain Identity Management (SCIM)
 Main goal is to automate the provisioning and deprovisioning of users and groups between systems.

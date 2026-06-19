@@ -45,7 +45,7 @@
     - Group is a Microsoft 365 Group. Group nesting is not allowed for Microsoft 365 groups.
     - Group has "Entra roles can be assigned to group" toggle. E.g. Group A has "assign role" toggled as true, Group B is non-dynamic and no role-assigned. Then Group B can be added as a member of Group A. But a role-assigned Group A cannot be added as a member of Group B (non-dynamic and no role-assigned). 
 
-## Microsoft Entra joined devices
+## Microsoft Entra Hybrid Joined devices
 [Read up](https://learn.microsoft.com/en-us/training/modules/create-configure-manage-identities/7-configure-manage-device-registration)
 1. Any organization can deploy Microsoft Entra joined devices no matter the size or industry. 
 2. Controlled with Mobile Device Management. Example: Microsoft Intune.
