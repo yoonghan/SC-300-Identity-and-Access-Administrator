@@ -1,0 +1,1404 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Han">
+      
+      
+        <link rel="canonical" href="https://yoonghan.github.io/SC-300-Identity-and-Access-Administrator/IdentityManagement/">
+      
+      
+        <link rel="prev" href="../Basic/">
+      
+      
+        <link rel="next" href="../EntraId/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Identity Management - Identity and Access Administrator (SC-300) Study Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="azure" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#users" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Identity and Access Administrator (SC-300) Study Guide" class="md-header__button md-logo" aria-label="Identity and Access Administrator (SC-300) Study Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Identity and Access Administrator (SC-300) Study Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Identity Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="azure" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="azure" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Basic/" class="md-tabs__link">
+          
+  
+  
+  Topics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Exam_Preparation/Notes/" class="md-tabs__link">
+          
+  
+  
+  Exam
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Identity and Access Administrator (SC-300) Study Guide" class="md-nav__button md-logo" aria-label="Identity and Access Administrator (SC-300) Study Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Identity and Access Administrator (SC-300) Study Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete Users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automation-system-for-cross-domain-identity-management-scim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automation (System for Cross-Domain Identity Management - SCIM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Groups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#group-nesting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group nesting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#microsoft-entra-hybrid-joined-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Microsoft Entra Hybrid Joined devices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Microsoft Entra Hybrid Joined devices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsoft-intune-the-endpoint-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Microsoft Intune: The Endpoint Manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#work-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Work together
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-nightmare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid Nightmare
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-service-password-reset-sspr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-service password reset (SSPR)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-factor-authentication-mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-factor Authentication (MFA)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EntraId/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entra ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../License/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ConditionAccess/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Condition Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SingleSignOn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Single Sign On
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ExternalId/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoleBasedAccess/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Role based access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AcessReview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Access Review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exam
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Exam
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exam_Preparation/Notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exam Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exam_Preparation/Labs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Labs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete Users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automation-system-for-cross-domain-identity-management-scim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automation (System for Cross-Domain Identity Management - SCIM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Groups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#group-nesting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group nesting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#microsoft-entra-hybrid-joined-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Microsoft Entra Hybrid Joined devices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Microsoft Entra Hybrid Joined devices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsoft-intune-the-endpoint-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Microsoft Intune: The Endpoint Manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#work-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Work together
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-nightmare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid Nightmare
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-service-password-reset-sspr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-service password reset (SSPR)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-factor-authentication-mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-factor Authentication (MFA)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Identity Management</h1>
+
+<h2 id="users">Users</h2>
+<ol>
+<li><strong>Cloud identities</strong> - These users exist only in <strong>Microsoft Entra ID</strong>. Examples are administrator accounts and users that you manage yourself. Their source is Microsoft Entra ID or External Microsoft Entra directory if the user is defined in another Microsoft Entra instance but needs access to subscription resources controlled by this directory. When these accounts are removed from the primary directory, they're deleted.</li>
+<li><strong>Directory-synchronized identities</strong> - These users exist in an on-premises Active Directory. A synchronization activity brings these users into Microsoft Entra ID. <strong>Microsoft Entra Cloud Sync</strong> is the recommended synchronization tool for most organizations—it uses a lightweight cloud-managed agent and supports multiple disconnected forests. <strong>Microsoft Entra Connect Sync</strong> remains available for complex scenarios such as device synchronization or groups with more than 50,000 members. Their source is <strong>Windows Server AD</strong>.</li>
+<li><strong>Guest users</strong> - These users exist <strong>outside</strong> your organization. Examples are accounts from other cloud providers and Microsoft accounts. Their source is Invited user. This type of account is useful when external vendors or contractors need access to your organization's resources. Once their help is no longer necessary, you can remove the account and all of their access. </li>
+</ol>
+<p><img alt="alt text" src="../img/entra_connect.png" /></p>
+<h3 id="add-user">Add User</h3>
+<ol>
+<li>Best managed in <strong>entra.microsoft.com</strong></li>
+<li>Cloud Identities can include properties like:<ul>
+<li>Job title</li>
+<li>Parental Controls</li>
+<li>Usage location (required for licensing purposes)</li>
+<li>Custom Security Attribute<br>
+<img alt="Custom Security Attribute" src="../img/custom-security-attribute.png" /></li>
+</ul>
+</li>
+<li>Support custom domain, but have to be included first.</li>
+</ol>
+<h3 id="delete-users">Delete Users</h3>
+<ol>
+<li>Soft Delete - Users are soft deleted and can be restored within 30 days.</li>
+<li>Hard Delete - Users are hard deleted and cannot be restored.</li>
+<li>Permission required to restore or delete users is <strong>User Administrator</strong> or <strong>Global Administrator</strong> or <strong>Partner Tier 1 Support</strong> or <strong>Partner Tier 2 Support</strong>.</li>
+</ol>
+<h3 id="automation-system-for-cross-domain-identity-management-scim">Automation (System for Cross-Domain Identity Management - SCIM)</h3>
+<p><a href="https://learn.microsoft.com/en-us/training/modules/create-configure-manage-identities/12-explore-automatic-user-creation">read</a></p>
+<h2 id="groups">Groups</h2>
+<ol>
+<li>Group types:<ul>
+<li><strong>Microsoft 365 Groups</strong> - Groups that are used to collaborate with other users. They have a shared mailbox, calendar, and other resources. This option also lets you give people outside of your organization access to the group. This option can only <em>add</em> users, not groups or devices.</li>
+<li><strong>Security Groups</strong> - Groups that are used to manage access to resources. Members of a security group can include users, devices, and service principals. <strong>This option requires a Microsoft Entra administrator.</strong></li>
+</ul>
+</li>
+<li>Membership types:<ul>
+<li><strong>Assigned</strong> - members are added and maintained manually.</li>
+<li><strong>Dynamic User</strong> - Users are added and removed automatically based on rules that evaluate user attributes such as department, job title, or location. <strong>Requires P1/P2 license.</strong></li>
+<li><strong>Dynamic Device</strong> - Devices are added and removed automatically based on rules that evaluate device attributes such as department, job title, or location. <strong>Requires P1/P2 license.</strong></li>
+<li><strong>NOTE</strong>: Users cannot be added manually if it is a dynamic membership type.</li>
+</ul>
+</li>
+<li>"Entra roles can be assigned to group" toggle<ul>
+<li>Is immutable once created</li>
+<li>User cannot use <strong>dynamic</strong>, <strong>nested</strong> or <strong>Microsoft 365</strong> group for the toggle to be true.</li>
+<li>User must be assigned manually to the group to prevent user to have highest privilege.</li>
+</ul>
+</li>
+</ol>
+<h3 id="group-nesting">Group nesting</h3>
+<ol>
+<li>There are 2 methods to create nested groups:<ul>
+<li><strong>Adding Groups as Members</strong>: Directly add one group (group A) as a member of another group (group B). Group A's members automatically inherit the permissions of Group B.</li>
+</ul>
+</li>
+<li>Group nestings are not allowed if:<ul>
+<li>Group is a dynamic group. E.g. Group A is non-dynamic, Group B is dynamic. Then Group B can be added as a member of Group A. But a non-dynamic Group A cannot be added as a member of a dynamic Group B.</li>
+<li>Group is a Microsoft 365 Group. Group nesting is not allowed for Microsoft 365 groups.</li>
+<li>Group has "Entra roles can be assigned to group" toggle. E.g. Group A has "assign role" toggled as true, Group B is non-dynamic and no role-assigned. Then Group B can be added as a member of Group A. But a role-assigned Group A cannot be added as a member of Group B (non-dynamic and no role-assigned). </li>
+</ul>
+</li>
+</ol>
+<h2 id="microsoft-entra-hybrid-joined-devices">Microsoft Entra Hybrid Joined devices</h2>
+<p><a href="https://learn.microsoft.com/en-us/training/modules/create-configure-manage-identities/7-configure-manage-device-registration">Read up</a>
+1. Any organization can deploy Microsoft Entra joined devices no matter the size or industry. 
+2. Controlled with Mobile Device Management. Example: Microsoft Intune.
+3. Can join as hybrid with on-prem AD.
+4. No longer supports device writeback. Use <strong>Cloud Kerberos Trust</strong> which allows Microsoft Entra joined and hybrid joined devices to authenticate to on-premises resources without requiring device objects to be written back to on-premises Active Directory.
+5. Conditional Access is required for device registration.
+6. Windows 10/11 Professional/Enterprise/Education are supported.
+7. Windows 10/11 Home are NOT supported.</p>
+<h3 id="microsoft-intune-the-endpoint-manager">Microsoft Intune: The Endpoint Manager</h3>
+<ol>
+<li>Microsoft Intune is the actual <strong>Mobile Device Management (MDM)</strong> and <strong>Mobile Application Management (MAM)</strong> platform. </li>
+<li>It is responsible for securing the physical device and the corporate data on it.</li>
+<li>
+<p>Intune operates on two different levels depending on whether the phone is corporate-owned or personal (BYOD - Bring Your Own Device):<br />
+    A. Mobile Device Management (MDM) – Device Centric, Used typically for corporate-owned devices.</p>
+<ul>
+<li>You "enroll" the entire phone into Intune.  </li>
+<li>Control: Full control. IT can force a device-wide PIN, push specific VPN and Wi-Fi profiles, block the app store, and completely factory-reset (wipe) the phone if it gets lost.</li>
+</ul>
+<p>B. Mobile Application Management (MAM) – Data Centric, Used typically for personal devices (BYOD).
+- You don't enroll the phone; instead, Intune manages only the apps (like Outlook, Teams, or custom corporate Java apps wrapped with the Intune SDK).
+- Control: Restricted to corporate data boundaries. It can block you from copying text out of corporate Outlook and pasting it into personal WhatsApp. If you leave the company, IT performs a Selective Wipe—deleting only the corporate emails and files, leaving your personal family photos completely untouched.</p>
+</li>
+</ol>
+<h3 id="work-together">Work together</h3>
+<ol>
+<li>The Request: The user hits Exchange Online.</li>
+<li>The Identity Check: Entra ID triggers a Conditional Access policy and routes them to Microsoft Authenticator to prove their identity via MFA.</li>
+<li>The Endpoint Check: Simultaneously, Entra ID asks Microsoft Intune: "Is this device marked as compliant? Is it encrypted? Does it have a PIN?"</li>
+<li>The Verdict: If the user passes the Authenticator challenge AND Intune confirms the device is healthy, Entra ID grants the access token.</li>
+<li>Overall: Authenticator handles the trust of the human, while Intune handles the trust of the machine.</li>
+</ol>
+<h2 id="hybrid-nightmare">Hybrid Nightmare</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Entra Registered (BYOD)</th>
+<th style="text-align: left;">Entra Joined (Cloud-Native)</th>
+<th style="text-align: left;">Hybrid Entra Joined</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Primary Audience</strong></td>
+<td style="text-align: left;">Personal laptops, mobiles (iOS/Android)</td>
+<td style="text-align: left;">New laptops, remote-first workforce</td>
+<td style="text-align: left;">Existing on-prem machines, legacy environments</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Identity Master</strong></td>
+<td style="text-align: left;">Personal account (with a cloud shadow)</td>
+<td style="text-align: left;">Entra ID (Cloud-only)</td>
+<td style="text-align: left;">On-Prem Active Directory</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Management Tool</strong></td>
+<td style="text-align: left;">Intune MAM (App-level security)</td>
+<td style="text-align: left;">Intune MDM (Modern management)</td>
+<td style="text-align: left;">Group Policies (GPOs) + Intune Co-management</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DC Line-of-Sight?</strong></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes (Required to log in)</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Microsoft's explicit recommendation for new environments is <strong>Entra ID Joined (Cloud-Native)</strong>. Thanks to modern protocols like Kerberos Cloud Trust, a purely cloud-joined laptop can still access old on-prem printers and network shares seamlessly without ever being joined to the local Active Directory domain.</li>
+<li>How the Bridge Works for Kerberos Trust. Instead of forcing you to build a massive, complex on-prem Certificate Authority infrastructure (PKI) to issue certificates to your cloud endpoints, Kerberos Cloud Trust allows your local Domain Controller to act as a consumer of tokens issued by Entra ID.<ol>
+<li>Your laptop authenticates to Entra ID (via Windows Hello for Business or FIDO2 keys).</li>
+<li>Entra ID hands your laptop a "partial" ticket.</li>
+<li>Your laptop takes that token and shows it to your on-prem Domain Controller.</li>
+<li>Your Domain Controller says, "Ah, I see Entra ID vouched for you." It accepts it and issues you a standard on-prem Kerberos Ticket.</li>
+</ol>
+</li>
+</ol>
+<h2 id="self-service-password-reset-sspr">Self-service password reset (SSPR)</h2>
+<ol>
+<li>SSPR can be used to reset the password of a user.<ul>
+<li>not able to log in to their account.</li>
+<li>forgotten their password.</li>
+<li>locked out of their account.</li>
+</ul>
+</li>
+<li>Only for Entra ID P1 and P2 licenses and Microsoft 365 Apps for business or Microsoft 365.</li>
+<li>Flow:
+    a. <strong>Localization</strong>: The portal checks the browser's locale setting and renders the SSPR page in the appropriate language.
+    b. <strong>Verification</strong>: The user enters their username and passes a CAPTCHA to ensure that it's a user and not a bot.
+    c. <strong>Authentication</strong>: The user enters the required data to authenticate their identity. They might enter a code or answer security questions.
+    d. <strong>Password reset</strong>: If the user passes the authentication tests, they can enter a new password and confirm it.
+    e. <strong>Notification</strong>: A message is sent to the user to confirm the reset.</li>
+<li><strong>Two-method authentication policy </strong>is always applied to accounts with an administrator role, regardless of your configuration for other users. They have option of:<ul>
+<li>Notify users on password resets</li>
+<li>Notify all admins when other admins reset their password</li>
+</ul>
+</li>
+<li>Methods of authentication:<ul>
+<li>Email</li>
+<li>Mobile app code - Microsoft Authenticator app</li>
+<li>Mobile app notification - Microsoft Authenticator app</li>
+<li>Mobile phone</li>
+<li>Office phone - # codes to press</li>
+<li>Security questions - minimum 3 questions</li>
+</ul>
+</li>
+<li>Best practices:<ul>
+<li>At least two methods of authentication.</li>
+<li>SMS and Security questions are not recommended as primary methods of authentication.</li>
+<li>Administrator accounts should have at least two methods of authentication.</li>
+</ul>
+</li>
+<li>For users in a hybrid environment, on-prem AD password reset can be done using SSPR with <strong>Microsoft Entra Connect</strong> or <strong>Cloud sync</strong>.</li>
+<li>SSPR can be enabled on:<ul>
+<li>None</li>
+<li>All - becareful: There is no block mechanism in place, if only 100 licenses is purchase but organization have 1000 users, all 1000 users will have SSPR capability. This will lead to compliance issue. </li>
+<li>Selected users or groups</li>
+</ul>
+</li>
+<li>Prerequisites for SSPR:<ul>
+<li>At least one authentication method must be configured for the user.</li>
+<li>Organization must have Microsoft Entra organization license - at least P1.</li>
+<li>Microsoft Entra account with Authentication Policy Administrator role - an account to setup SSPR. </li>
+<li>Non-administrative user account - You'll use this account to test SSPR.</li>
+<li>Security group with which to test the configuration - The non-administrative user account must be a member of this group. You'll use this security group to limit who you roll SSPR out to.</li>
+</ul>
+</li>
+<li>Tips: If an exam question asks: "You have 50 Entra ID P1 licenses and 500 users. You need to ensure users can reset their passwords without breaking compliance. What should you do?"<ul>
+<li>Incorrect Answer: Enable SSPR for "All" users (violates compliance terms).</li>
+<li>Correct Answer: Create a security group containing the 50 licensed users, and configure SSPR targeting only the Selected group.</li>
+</ul>
+</li>
+</ol>
+<h2 id="multi-factor-authentication-mfa">Multi-factor Authentication (MFA)</h2>
+<p><img alt="alt text" src="../img/mfa.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
