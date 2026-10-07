@@ -50,6 +50,11 @@ Only users and groups that are members of the AU can be managed by the administr
     - Attribute Definition Admin = required to create 
     - Attribute Assignment Admin = required to assign (this attribute can be assigned to user or group)
 7. No spaces for the attribute. Got type like multi option, string, int.
+8. For a user
+    - **Directory synchronized** (synced from on-prem Active Directory via Azure AD Connect)
+    - **Cloud-only** (created directly in Microsoft Entra ID)
+    - **Hybrid** (synced from on-prem AD but with Entra ID attributes that don't exist in on-prem AD)
+9. Custom security attributes are not supported for guest users.
 
 ## System for Cross-Domain Identity Management (SCIM)
 Main goal is to automate the provisioning and deprovisioning of users and groups between systems.
@@ -59,3 +64,7 @@ Main goal is to automate the provisioning and deprovisioning of users and groups
 
 ### New feature - Automatic provisioning
 Microsoft Entra ID supports **API-driven inbound provisioning**, which reached general availability in March 2024. Instead of requiring the source system to push data via SCIM, any automation tool, or script can retrieve workforce data from any system of record and send it to the Microsoft Entra provisioning API. 
+
+## Conditional Access
+1. Read at https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview
+2. Conditions: Users or group, Cloud apps or actions, Conditions (Location, Device platform, Client applications, Filter for devices, Sign-in risk, User risk), Grant (Access controls).

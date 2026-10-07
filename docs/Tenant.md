@@ -88,3 +88,13 @@ Architect Answer: Navigate to your standard workforce tenant, open External coll
 **Scenario B (Consumer Application Domain)**: * Question: "You need to provision an isolated tenant environment to manage millions of mobile app retail customers without letting them interact with your corporate employee lifecycle."
 
 Architect Answer: Create a dedicated customer-facing tenant under the Microsoft Entra External ID umbrella.
+
+## Management Group
+1. Tenant -> Management Group -> Subscription -> Resource Group -> Resource.
+2. Remember resource group
+    - Just parking of metadata (nothing to do with regions etc) of resources.
+    - Any property changes are applied to current and future.
+    - If you move resources from one RG to another, it doesn't trigger redeploy.
+    - If delete RG, it will delete all resources inside it.
+
+![image](img/tenant-resource-group.png)
