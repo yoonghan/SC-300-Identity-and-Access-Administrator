@@ -40,7 +40,7 @@ dependencies {
     // Core Telemetry Infrastructure
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktorVersion")
     implementation("io.micrometer:micrometer-registry-otlp:latest.release")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.18.1-alpha")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-ktor-3.0:2.28.1-alpha")
     implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:1.62.0")
 
     // testing
