@@ -54,6 +54,24 @@ graph TD
     
     b. **User-assigned**: Standalone resource, can be shared across multiple resources.
 
+2. Technically Managed Identity is Service principal. Common terms for managed identities and service principals:
+  - **Client ID**: The unique ID linked to the app and service principal created when you provisioned the identity.
+  - **Object ID**: The service principal object of the managed identity.
+  - **Azure Instance Metadata Service**: The REST API is enabled when Azure Resource Manager creates a VM. The endpoint is accessible only from within the VM.
+
+#### Things to know about application objects and service principals
+
+As you continue to plan the identity strategy for, consider these characteristics of app objects and service principals:
+  - An app can have at most one app object, which is registered in a "home" directory.
+  - An app can have one or more service principal objects that represent instances of the app in every directory in which it acts.
+  - An app object has a 1:1 relationship with the software app, and a 1:many relationship with its service principal object.
+  - A service principal must be created in each tenant where the app is used. The service principal establishes an identity for sign-in and access to tenant resources.
+  - A single-tenant app has only one service principal (in its home tenant) created and consented for use during app registration. A multitenant app also has a service principal created in each tenant where the principal is used.
+
+Managed identity service principals can be granted access and permissions, but they can't be updated or modified directly.
+
+Legacy service principals can only be used in the tenant where they're created.
+
 ## Entra Domain Service
 1. A substitute to Microsoft Active Directory Domain Services (AD DS).
 2. Microsoft Entra Domain Services offers an alternative that integrates with local AD DS and provides domain services like Group Policy management and Kerberos authentication without the need for additional domain controllers. It can be used even without local AD DS, allowing organizations to create a Microsoft Entra tenant and connect it to their on-premises resources.
