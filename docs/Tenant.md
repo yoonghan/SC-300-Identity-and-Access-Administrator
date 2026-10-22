@@ -3,6 +3,7 @@
 ## Tenant Type
 There are basically only 2 tenant types. 
   - Microsoft Entra ID
+  - B2B (https://learn.microsoft.com/en-us/entra/external-id/what-is-b2b)
   - Azure AD B2C (this is the old External ID, deprecated but in exam)
   - Microsoft Entra External ID (this is the new AD B2C)
 

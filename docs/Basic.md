@@ -45,6 +45,8 @@ graph TD
 4. 1 Application Object can have multiple Service Principals.
 5. Resources can only be assigned to Service Principals, not Application Objects. 
 
+![service principal](img/basic_serviceprincipal.png)
+
 ### Managed Identities (for Resources)
 1. Used when an Azure resource (e.g., Virtual Machine, Web App) needs to authenticate to another resource. It eliminates the need for developers to manage credentials (secrets/certificates) in code.
 

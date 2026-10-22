@@ -12,3 +12,8 @@ This is Entra condition access, which is to protect user/tenant login.
 2. You can:
     a. Create a custom policy
     b. Require users to accept terms of use, e.g., accept every 1 days, annually or forever.
+
+## Policy
+1. Configurable in Conditional Access with P2 license [Policy](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-configure-risk-policies)
+  - User risk policy
+  - Sign-in risk policy
