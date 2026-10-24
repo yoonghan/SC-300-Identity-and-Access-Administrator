@@ -7,6 +7,5 @@
    b. Can choose who can review.
    c. Also can set recurrance, that will inform user it needs review.
    d. Can set if reviewers don't respond, what should we do instead.
-
-
-   
+4. For Role base need to go thru PIM.
+5. For Users can be assigned directly to access review, no PIM needed.

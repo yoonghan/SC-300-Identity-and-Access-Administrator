@@ -39,6 +39,11 @@ Only users and groups that are members of the AU can be managed by the administr
 ### Microsoft Entra Privilege Identity Management (PIM)
 - What it does: Mitigates risk by enforcing "least privilege" access, allowing administrators to activate permissions only when needed, rather than having standing admin access.
 - Capabilities: Time-bound activation, approval workflows for activation, and auditing of privileged roles.
+- Requires P2 License
+- To enable PIM, user needs:
+    - MFA must be enabled
+    - Must be assigned to a role eligible assignment in PIM
+
 
 ## Custom Security Attributes
 1. Read at https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-manage?tabs=admin-center
@@ -68,3 +73,15 @@ Microsoft Entra ID supports **API-driven inbound provisioning**, which reached g
 ## Conditional Access
 1. Read at https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview
 2. Conditions: Users or group, Cloud apps or actions, Conditions (Location, Device platform, Client applications, Filter for devices, Sign-in risk, User risk), Grant (Access controls).
+3. Need P1 license. but for more control on risk policy, requires P2 license.
+
+### Risk Policy
+1. Under Entra ID Protection, need P2 License.
+2. What it does: Creates policies that trigger actions based on user and sign-in risk levels.
+3. Capabilities: 
+    - Block access when risk is high.
+    - Require user to change password or MFA when risk is medium/high.
+    - Can set conditions like apply to all users, or specific users.
+4. Risk Level: None, Low, Medium, High. It is calculated by Microsoft Entra ID Protection.
+    - User Risk: Based on user's activity history. 
+    - Sign-in Risk: Based on sign-in activity, i.e. location, device, client application.
