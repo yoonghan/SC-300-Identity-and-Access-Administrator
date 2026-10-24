@@ -1,7 +1,9 @@
 # Condition Access
 
-This is Entra condition access, which is to protect user/tenant login.
-
+1. This is Entra condition access, which is to protect user/tenant login.
+2. Internally it has "Continuous Access Evaluation" (CAE), which can make policy trigger during session, not only during login/authentication. This means:
+  - Revoke token when risk is detected during session
+  
 ## Common Settings
 1. Need to disable "**Security Default**" for tenant, then choose using "Conditional Access". (Identity > Protect & secure > Conditional Access > Conditional Access)
 2. Requires a P1 or P2 license.
