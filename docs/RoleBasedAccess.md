@@ -1,4 +1,4 @@
-# Role based access
+# Role based access control
 
 ## Azure RBAC
 1. Roles for Azure Resources.
@@ -47,3 +47,21 @@
 3. Once the Admin Consent is granted, the service principal can use the API permission to access the Microsoft Graph API.
 4. Finally, assign the role to the user/group in the Enterprise Application.
 
+## Access Control List
+
+1. Several services rely on Access Control Lists (ACLs) to handle fine-grained permissions that broad Azure RBAC roles cannot manage alone. These generally fall into two categories: Data/File System ACLs and Network ACLs.
+2. If using ACL, RBAC needs to be "removed" else it runs RBAC before ACL.
+3. Things that us ACL are
+  - Data and File Storage Services - These services use ACLs to control exactly who can read, write, or execute specific files or folders.
+  - Azure Data Lake Storage Gen2 (ADLS Gen2)
+  - Azure Files
+  - Azure NetApp Files
+  - NSG
+  - Storage Account Firewall
+
+| Feature | Azure RBAC | Access Control Lists (ACLs)
+| --- | --- | --- 
+| Scope (Granularity) | "Coarse-grained (Management Group, Subscription, Resource Group, Storage Account, or Container)." | Fine-grained (Specific files or directories).
+| Evaluation Order | Evaluated First. | Evaluated Second (only if RBAC doesn't grant access).
+| Best Used For | "Broad access. (e.g., ""The Data Engineering team needs read/write access to this entire storage account"")." | "Specific access. (e.g., ""User A only needs read access to Folder B, but nothing else in the container"")."
+| Relevant Roles/Perms | "Storage Blob Data Contributor, Storage Blob Data Reader, Storage Blob Data Owner." | "POSIX-like permissions: Read (r), Write (w), Execute (x)."
